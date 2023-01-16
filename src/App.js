@@ -7,14 +7,13 @@ import Login from "./Pages/Login/Login";
 
 function App() {
   return (
-    // <Router>
-    //   <NavBar />
-    //   <Routes>
-    //     <Route path="/" exact component={Home} />
-    //     <Route path="/login" component={Login} />
-    //   </Routes>
-    // </Router>
-    <Home/>
+    <Router>
+      <NavBar />
+      <Routes>
+        <Route path="/" exact element={<Home/>} />
+        <Route path="/login" element={<Login/>} />
+      </Routes>
+    </Router>
   );
 }
 
