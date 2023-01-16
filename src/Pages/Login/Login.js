@@ -1,64 +1,64 @@
 import React from "react";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 const Login = () => {
-  const [reRender, setReRender] = useState(false);
-  const [userData, setUserData] = useState({});
+  // const [reRender, setReRender] = useState(false);
+  // const [userData, setUserData] = useState({});
 
-  const CLIENT_ID = "873e0714a324467e0176";
+  // const CLIENT_ID = "873e0714a324467e0176";
 
-  useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const codeParams = urlParams.get("code");
-    console.log(codeParams);
+  // useEffect(() => {
+  //   const queryString = window.location.search;
+  //   const urlParams = new URLSearchParams(queryString);
+  //   const codeParams = urlParams.get("code");
+  //   console.log(codeParams);
 
-    if (codeParams && localStorage.getItem("accessToken") === null) {
-      async function getAccessToken() {
-        await fetch("http://localhost:4000/getAccessToken?code=" + codeParams, {
-          method: "GET",
-        })
-          .then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            console.log(data);
-            if (data.access_token) {
-              localStorage.setItem("accessToken", data.access_token);
-              setReRender(!reRender);
-            }
-          });
-      }
-      getAccessToken();
-    }
-  }, []);
+  //   if (codeParams && localStorage.getItem("accessToken") === null) {
+  //     async function getAccessToken() {
+  //       await fetch("http://localhost:4000/getAccessToken?code=" + codeParams, {
+  //         method: "GET",
+  //       })
+  //         .then((response) => {
+  //           return response.json();
+  //         })
+  //         .then((data) => {
+  //           console.log(data);
+  //           if (data.access_token) {
+  //             localStorage.setItem("accessToken", data.access_token);
+  //             setReRender(!reRender);
+  //           }
+  //         });
+  //     }
+  //     getAccessToken();
+  //   }
+  // }, []);
 
-  async function getUserData() {
-    await fetch("http://localhost:4000/getUserData", {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("accessToken"),
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setUserData(data);
-      });
-  }
+  // async function getUserData() {
+  //   await fetch("http://localhost:4000/getUserData", {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: "Bearer " + localStorage.getItem("accessToken"),
+  //     },
+  //   })
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //       setUserData(data);
+  //     });
+  // }
 
-  const githubLogin = () => {
-    window.location.assign(
-      `https://github.com/login/oauth/authorize?client_id=` + CLIENT_ID
-    );
-  };
+  // const githubLogin = () => {
+  //   window.location.assign(
+  //     `https://github.com/login/oauth/authorize?client_id=` + CLIENT_ID
+  //   );
+  // };
 
   return (
     <div className="App">
       <header className="App-header">
-        {localStorage.getItem("accessToken") ? (
+        {/* {localStorage.getItem("accessToken") ? (
           <>
             <h1>We have the access token</h1>
             <button
@@ -93,7 +93,8 @@ const Login = () => {
               Sign In with Github
             </button>
           </>
-        )}
+        )} */}
+        <h2>Sanity Check for Login</h2>
       </header>
     </div>
   );
