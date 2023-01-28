@@ -9,13 +9,14 @@
       name="description"
       content="Web site created using create-react-app"
     />
+   <!-- Compiled and minified CSS -->
+   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
 
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+   <!-- Compiled and minified JavaScript -->
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
 
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-            
+   <link href="https://unpkg.com/cirrus-ui" type="text/css" rel="stylesheet"/>
+   <script src="https://cdn.jsdelivr.net/npm/cirrus-ui/dist/cirrus.min.css"></script>
 
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
@@ -34,9 +35,11 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
 
-    <!-- <script>
-      window.apiHost = ``;  
-    </script> -->
-
+    <script>
+      window.ENV = {
+        REACT_APP_SERVER_URL: "http://localhost:4000",
+        CLIENT_ID: "873e0714a324467e0176"
+      }
+    </script>
   </body>
 </html>
