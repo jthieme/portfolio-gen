@@ -58,7 +58,7 @@ const NavBar = ({ userData }) => {
       <div className="header header-dark u-unselectable header-animated px-0 px-2-md">
         <div className="header-brand">
           <div className="nav-item no-hover">
-            <a>
+            <a href="/">
               <h6 className="tracking-tight">ProPort</h6>
             </a>
           </div>
@@ -69,13 +69,13 @@ const NavBar = ({ userData }) => {
               <div>
                 <StyledAvatar src={userData.avatar_url} />
               </div>
-              <div className="nav-item no-hover" style={{ padding: 0 }}>
-                <a href="" style={{ padding: 5 }}>
+              <div className="nav-item no-hover" style={{ padding: 0, cursor: "default" }}>
+                <div style={{ padding: 5, cursor: "default"}}>
                   Hey, {userData.login}
-                </a>
+                </div>
               </div>
               <div className="nav-item">
-                <a class="btn btn-white btn--sm py-0" onClick={userLogout}>
+                <a className="btn btn-white btn--sm py-0 hover-grow" onClick={userLogout}>
                   Logout
                 </a>
               </div>
@@ -84,7 +84,7 @@ const NavBar = ({ userData }) => {
         ) : (
           <div className="nav-right text">
             <div className="nav-item">
-              <a class="btn btn-white btn--sm py-0" onClick={githubLogin}>
+              <a className="btn btn-white btn--sm py-0 hover-grow" onClick={githubLogin}>
                 Login
               </a>
             </div>

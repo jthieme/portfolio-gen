@@ -1,41 +1,54 @@
 import React, { useEffect } from "react";
+import styled from "styled-components";
 
-const RepoCard = ({ repoData }) => {
+const StyledDiv = styled.div`
+  
+`;
+
+const RepoCard = ({ repoData, key }) => {
+  const { name, language, html_url } = repoData;
   return (
     <>
-      <details class="accordion">
-        <summary class="accordion__summary">Accordion 1</summary>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-          urna diam, tincidunt nec porta sed, auctor id velit. Etiam venenatis
-          nisl ut orci consequat, vitae tempus quam commodo. Nulla non mauris
-          ipsum. Aliquam eu posuere orci. Nulla convallis lectus rutrum quam
-          hendrerit, in facilisis elit sollicitudin. Mauris pulvinar pulvinar
-          mi, dictum tristique elit auctor quis. Maecenas ac ipsum ultrices,
-          porta turpis sit amet, congue turpis.
-        </p>
-      </details>
-      <details class="accordion">
-        <summary class="accordion__summary">Accordion 2</summary>
-        <ul>
-          <li>Vestibulum id elit quis massa interdum sodales.</li>
-          <li>Nunc quis eros vel odio pretium tincidunt nec quis neque.</li>
-          <li>Quisque sed eros non eros ornare elementum.</li>
-          <li>Cras sed libero aliquet, porta dolor quis, dapibus ipsum.</li>
-        </ul>
-      </details>
-      <details class="accordion">
-        <summary class="accordion__summary">Accordion 3</summary>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-          urna diam, tincidunt nec porta sed, auctor id velit. Etiam venenatis
-          nisl ut orci consequat, vitae tempus quam commodo. Nulla non mauris
-          ipsum. Aliquam eu posuere orci. Nulla convallis lectus rutrum quam
-          hendrerit, in facilisis elit sollicitudin. Mauris pulvinar pulvinar
-          mi, dictum tristique elit auctor quis. Maecenas ac ipsum ultrices,
-          porta turpis sit amet, congue turpis.
-        </p>
-      </details>
+      <div style={{ paddingBottom: 15 }}>
+        <div
+          className="grid-c-1 u-duration-300"
+          key={key}
+          style={{
+            border: "1px solid black",
+            marginBottom: 5,
+            marginLeft: 20,
+            borderRadius: 10,
+          }}
+        >
+          <details className="accordion form-ext-checkbox grid-c-1">
+            <summary
+              className="accordion__summary form-ext-label grid-c-1"
+              htmlFor="check-dark"
+            >
+              <span>
+                <input
+                  id="check-dark"
+                  className="form-ext-input form-ext-input--dark"
+                  type="checkbox"
+                />
+              </span>
+              Repo Name: {name}
+            </summary>
+            <p style={{ paddingLeft: "6em" }}>
+              Repo language:
+              <span style={{ fontWeight: "bolder" }}> {language}</span>
+            </p>
+            <p style={{ paddingLeft: "6em" }}>
+              Repo Link:
+              <span style={{ fontWeight: "bolder" }}>
+                <a href={html_url} target="_blank">
+                  {html_url}
+                </a>
+              </span>
+            </p>
+          </details>
+        </div>
+      </div>
     </>
   );
 };
