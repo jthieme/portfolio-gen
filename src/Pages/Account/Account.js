@@ -15,7 +15,7 @@ const Account = ({ userData }) => {
   // console.log(userData.repos_url)
 
   const handleSubmit = () => {
-    window.location = "https://localhost:3000/account/edit"
+    window.location = "http://localhost:3000/account/edit"
   };
 
   return (

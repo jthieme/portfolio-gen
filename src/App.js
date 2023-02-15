@@ -3,9 +3,9 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./Components/NavBar/Navbar";
 import Home from "./Pages/Home/Home";
-import Login from "./Pages/Login/Login";
 import Account from "./Pages/Account/Account";
 import DefaultHome from "./Pages/Home/DefaultHome";
+import InteractiveEditor from "./Pages/Edit/InteractiveEditor";
 
 function App() {
 
@@ -41,7 +41,7 @@ function App() {
         ) : (
           <Route path="/" element={<DefaultHome />} />
         )}
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/account/edit" element={<InteractiveEditor userData={userData}/>} />
       </Routes>
     </Router>
 
