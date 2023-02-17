@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-const StyledDiv = styled.div`
-  
-`;
+const StyledDiv = styled.div``;
 
-const RepoCard = ({ repoData, key }) => {
+const RepoCard = ({ repoData, key, handleCheckboxChange, hasCheckBox }) => {
   const { name, language, html_url } = repoData;
+
+  const handleRepoSelection = (event) => {
+    handleCheckboxChange(repoData);
+  };
+
   return (
     <>
       <div style={{ paddingBottom: 15 }}>
@@ -25,13 +28,16 @@ const RepoCard = ({ repoData, key }) => {
               className="accordion__summary form-ext-label grid-c-1"
               htmlFor="check-dark"
             >
-              <span>
-                <input
-                  id="check-dark"
-                  className="form-ext-input form-ext-input--dark"
-                  type="checkbox"
-                />
-              </span>
+              {hasCheckBox && (
+                <span>
+                  <input
+                    id="check-dark"
+                    className="form-ext-input form-ext-input--dark"
+                    type="checkbox"
+                    onChange={handleRepoSelection}
+                  />
+                </span>
+              )}
               Repo Name: {name}
             </summary>
             <p style={{ paddingLeft: "6em" }}>

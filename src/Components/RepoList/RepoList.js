@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RepoCard from "./RepoCard";
 
-const RepoList = ({ userData }) => {
+const RepoList = ({ userData, handleCheckboxChange }) => {
   const [userRepoList, setUserRepoList] = useState([{}]);
 
   function getUserRepos(userName) {
@@ -20,7 +20,12 @@ const RepoList = ({ userData }) => {
   const repoList = userRepoList.map((repo) => {
     return (
       <div className="grid-cs-3 grid-ce-10">
-          <RepoCard repoData={repo} key={repo.id} />
+        <RepoCard
+          repoData={repo}
+          key={repo.id}
+          handleCheckboxChange={handleCheckboxChange}
+          hasCheckBox={true}
+        />
       </div>
     );
   });
@@ -34,6 +39,7 @@ const RepoList = ({ userData }) => {
         If you want to showcase any of these, simply click on the checkbox, and
         press the "Showcase Selected" button.
       </p>
+      {/* <button className="btn--sm">Select All</button> */}
       {repoList}
     </>
   );

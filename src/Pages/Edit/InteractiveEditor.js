@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { ChromePicker } from "react-color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import RepoCard from "../../Components/RepoList/RepoCard";
 
 const Sidebar = ({
   // changeTextSize,
@@ -86,7 +88,7 @@ const Sidebar = ({
     >
       {/* <h3 style={{ textAlign: "center"}}>Sidebar</h3>
       <div className="divider" style={{marginTop: "-2%"}}/> */}
-      <h5 style={{textAlign: "center"}}>Font Options</h5>
+      <h5 style={{ textAlign: "center" }}>Font Options</h5>
       <div className="divider" style={{ marginTop: "-2%" }} />
       <label>Font Size</label>
       <select
@@ -105,13 +107,18 @@ const Sidebar = ({
         Change Font Color
       </button>
       <br />
-      <button className="btn--xs" onClick={() => setColorSelect(!colorSelect)}>Select Color</button>
+      <button className="btn--xs" onClick={() => setColorSelect(!colorSelect)}>
+        Select Color
+      </button>
       {colorSelect && (
-        <div style={{marginLeft: "5%"}}>
-          <ChromePicker color={selectedColorType} onChange={handleColorChange} />
+        <div style={{ marginLeft: "5%" }}>
+          <ChromePicker
+            color={selectedColorType}
+            onChange={handleColorChange}
+          />
         </div>
       )}
-      <br/>
+      <br />
       <label style={{ width: "80%" }}>First Name</label>
       <input
         className="input--sm"
@@ -142,12 +149,11 @@ const Sidebar = ({
         placeholder="Software Engineering Student"
         style={{ width: "58%", marginLeft: "5%" }}
       />
-      <h5 style={{textAlign: "center"}}>Background Options</h5>
+      <h5 style={{ textAlign: "center" }}>Background Options</h5>
       <div className="divider" style={{ marginTop: "-2%" }} />
       <button className="btn--xs" onClick={changeBackgroundColor}>
         Change Background Color
       </button>
-
     </section>
   );
 };
@@ -161,7 +167,16 @@ const InteractivePanel = ({
   lastName,
   title,
   userData,
+  selectedRepos,
 }) => {
+  const repoList = selectedRepos.map((repo) => {
+    return (
+      <div className="grid-cs-3 grid-ce-10">
+        <RepoCard repoData={repo} key={repo.id} hasCheckBox={false} />
+      </div>
+    );
+  });
+
   return (
     <section
       className="grid-c-8 grid-r-4"
@@ -250,6 +265,7 @@ const InteractivePanel = ({
           <FontAwesomeIcon icon={faPlus} style={{ marginRight: "4%" }} />
           Add Content
         </div>
+        {repoList}
       </div>
     </section>
   );
@@ -265,6 +281,13 @@ const InteractiveEditor = ({ userData }) => {
   const [lastName, setLastName] = useState("Last Name");
   const [title, setTitle] = useState("Software Engineering Student");
   const [fontSize, setFontSize] = useState("40px");
+
+  const location = useLocation();
+  const selectedRepos = location?.state?.repos;
+
+  useEffect(() => {
+    console.log(location?.state?.repos, "interactive editor");
+  }, [location]);
 
   // const changeTextSize = () => {
   //   setTextSize(textSize === "16px" ? "20px" : "16px");
@@ -315,6 +338,7 @@ const InteractiveEditor = ({ userData }) => {
         title={title}
         userData={userData}
         fontSize={fontSize}
+        selectedRepos={selectedRepos}
       />
       <Sidebar
         // changeTextSize={changeTextSize}
