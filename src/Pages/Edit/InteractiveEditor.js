@@ -79,6 +79,9 @@ const Sidebar = ({
   ));
 
   const [colorSelect, setColorSelect] = useState(false);
+  const [showFontOptions, setShowFontOptions] = useState(false);
+  const [showBackgroundOptions, setShowBackgroundOptions] = useState(false);
+  const [showCardOptions, setShowCardOptions] = useState(false);
 
   return (
     <section
@@ -102,88 +105,118 @@ const Sidebar = ({
         <button className="bg-orange-500 btn--lg hover-grow">Publish</button>
       </div>
       <div className="divider" style={{ marginTop: "-2%" }} />
-      <h5 style={{ textAlign: "center" }}>Font Options</h5>
-      <div className="divider" style={{ marginTop: "-2%" }} />
-      <label>Font Size</label>
-      <select
-        className="input--xs"
-        id="fontSize"
-        value={fontSize}
-        onChange={handleFontSizeChange}
-        style={{ width: "20%" }}
+      <div
+        style={{ cursor: "pointer" }}
+        onClick={() => setShowFontOptions(!showFontOptions)}
       >
-        {optionElements}
-      </select>
-      {/* <button className="btn--xs" onClick={changeTextSize}>
+        <h5 style={{ textAlign: "center" }}>Font Options</h5>
+      </div>
+      <div className="divider" style={{ marginTop: "-2%" }} />
+      {showFontOptions && (
+        <>
+          <label>Font Size</label>
+          <select
+            className="input--xs"
+            id="fontSize"
+            value={fontSize}
+            onChange={handleFontSizeChange}
+            style={{ width: "20%" }}
+          >
+            {optionElements}
+          </select>
+          {/* <button className="btn--xs" onClick={changeTextSize}>
         Change Text Size
       </button> */}
-      <button className="btn--xs" onClick={changeFontColor}>
-        Change Font Color
-      </button>
-      <br />
-      <button className="btn--xs" onClick={() => setColorSelect(!colorSelect)}>
-        Select Color
-      </button>
-      {colorSelect && (
-        <div style={{ marginLeft: "5%" }}>
-          <ChromePicker
-            color={selectedColorType}
-            onChange={handleColorChange}
+          <button className="btn--xs" onClick={changeFontColor}>
+            Change Font Color
+          </button>
+          <br />
+          <button
+            className="btn--xs"
+            onClick={() => setColorSelect(!colorSelect)}
+          >
+            Select Color
+          </button>
+          {colorSelect && (
+            <div style={{ marginLeft: "5%" }}>
+              <ChromePicker
+                color={selectedColorType}
+                onChange={handleColorChange}
+              />
+            </div>
+          )}
+          <br />
+          <label style={{ width: "80%" }}>First Name</label>
+          <input
+            className="input--sm"
+            type="text"
+            value={firstName}
+            onChange={handleNameChange}
+            name="firstName"
+            placeholder="First Name"
+            style={{ width: "58%", marginLeft: "5%" }}
           />
-        </div>
+          <label style={{ width: "80%" }}>Last Name</label>
+          <input
+            className="input--sm"
+            type="text"
+            value={lastName}
+            onChange={handleNameChange}
+            name="lastName"
+            placeholder="Last Name"
+            style={{ width: "58%", marginLeft: "5%" }}
+          />
+          <label style={{ width: "80%" }}>Title</label>
+          <input
+            className="input--sm"
+            type="text"
+            value={title}
+            onChange={handleNameChange}
+            name="title"
+            placeholder="Software Engineering Student"
+            style={{ width: "58%", marginLeft: "5%" }}
+          />
+        </>
       )}
-      <br />
-      <label style={{ width: "80%" }}>First Name</label>
-      <input
-        className="input--sm"
-        type="text"
-        value={firstName}
-        onChange={handleNameChange}
-        name="firstName"
-        placeholder="First Name"
-        style={{ width: "58%", marginLeft: "5%" }}
-      />
-      <label style={{ width: "80%" }}>Last Name</label>
-      <input
-        className="input--sm"
-        type="text"
-        value={lastName}
-        onChange={handleNameChange}
-        name="lastName"
-        placeholder="Last Name"
-        style={{ width: "58%", marginLeft: "5%" }}
-      />
-      <label style={{ width: "80%" }}>Title</label>
-      <input
-        className="input--sm"
-        type="text"
-        value={title}
-        onChange={handleNameChange}
-        name="title"
-        placeholder="Software Engineering Student"
-        style={{ width: "58%", marginLeft: "5%" }}
-      />
-      <h5 style={{ textAlign: "center" }}>Background Options</h5>
-      <div className="divider" style={{ marginTop: "-2%" }} />
-      <button className="btn--xs" onClick={changeBackgroundColor}>
-        Change Background Color
-      </button>
-      <h5 style={{ textAlign: "center" }}>Repo Card Options</h5>
-      <div className="divider" style={{ marginTop: "-2%" }} />
-      <div>Font Size</div>
-      <div>Font Color</div>
-      <div>Card Margin</div>
-      <div>Card Padding</div>
-      <div>
-        <input
-          id="check-dark"
-          className="form-ext-input form-ext-input--dark"
-          type="checkbox"
-          onChange={handleBorderSelection}
-          style={{ marginRight: "1%" }}
-        />
-        Border
+      <div
+        style={{ cursor: "pointer" }}
+        onClick={() => setShowBackgroundOptions(!showBackgroundOptions)}
+      >
+        <h5 style={{ textAlign: "center" }}>Background Options</h5>
       </div>
+      <div className="divider" style={{ marginTop: "-2%" }} />
+      {showBackgroundOptions && (
+        <>
+          <button className="btn--xs" onClick={changeBackgroundColor}>
+            Change Background Color
+          </button>
+        </>
+      )}
+      <div
+        style={{ cursor: "pointer" }}
+        onClick={() => setShowCardOptions(!showCardOptions)}
+      >
+        <h5 style={{ textAlign: "center" }}>Repo Card Options</h5>
+      </div>
+      <div className="divider" style={{ marginTop: "-2%" }} />
+      {showCardOptions && (
+        <>
+          <div>Font Size</div>
+          <div>Font Color</div>
+          <div>Card Margin</div>
+          <div>Card Padding</div>
+          <div>
+            <input
+              id="check-dark"
+              className="form-ext-input form-ext-input--dark"
+              type="checkbox"
+              onChange={handleBorderSelection}
+              style={{ marginRight: "1%" }}
+            />
+            Border
+          </div>
+        </>
+      )}
     </section>
   );
 };
