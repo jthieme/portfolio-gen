@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledDiv = styled.div``;
 
-const RepoCard = ({ repoData, key, handleCheckboxChange, hasCheckBox }) => {
+const RepoCard = ({ repoData, key, handleCheckboxChange, hasCheckBox, hasBorder }) => {
   const { name, language, html_url } = repoData;
 
   const handleRepoSelection = (event) => {
@@ -17,7 +17,8 @@ const RepoCard = ({ repoData, key, handleCheckboxChange, hasCheckBox }) => {
           className="grid-c-1 u-duration-300"
           key={key}
           style={{
-            border: "1px solid black",
+            
+            border: hasBorder ? "1px solid black" : "",
             marginBottom: 5,
             marginLeft: 20,
             borderRadius: 10,

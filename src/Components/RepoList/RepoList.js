@@ -25,6 +25,7 @@ const RepoList = ({ userData, handleCheckboxChange }) => {
           key={repo.id}
           handleCheckboxChange={handleCheckboxChange}
           hasCheckBox={true}
+          hasBorder={true}
         />
       </div>
     );

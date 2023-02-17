@@ -13,6 +13,7 @@ const Sidebar = ({
   selectedColorType,
   handleNameChange,
   handleFontSizeChange,
+  handleBorderSelection,
   fontSize,
   firstName,
   lastName,
@@ -68,7 +69,11 @@ const Sidebar = ({
   ];
 
   const optionElements = options.map((option, index) => (
-    <option key={index} value={`${parseInt(option)}px`} selected={fontSize}>
+    <option
+      key={index}
+      value={`${parseInt(option)}px`}
+      selected={`${parseInt(option)}px` === fontSize}
+    >
       {`${parseInt(option)}px`}
     </option>
   ));
@@ -88,6 +93,15 @@ const Sidebar = ({
     >
       {/* <h3 style={{ textAlign: "center"}}>Sidebar</h3>
       <div className="divider" style={{marginTop: "-2%"}}/> */}
+      <div
+        style={{ marginTop: "2%" }}
+        className="u-flex u-justify-space-evenly"
+      >
+        <button className="bg-gray-500 hover-grow">Save</button>
+        <button className="btn-dark hover-grow">Preview</button>
+        <button className="bg-orange-500 btn--lg hover-grow">Publish</button>
+      </div>
+      <div className="divider" style={{ marginTop: "-2%" }} />
       <h5 style={{ textAlign: "center" }}>Font Options</h5>
       <div className="divider" style={{ marginTop: "-2%" }} />
       <label>Font Size</label>
@@ -154,6 +168,22 @@ const Sidebar = ({
       <button className="btn--xs" onClick={changeBackgroundColor}>
         Change Background Color
       </button>
+      <h5 style={{ textAlign: "center" }}>Repo Card Options</h5>
+      <div className="divider" style={{ marginTop: "-2%" }} />
+      <div>Font Size</div>
+      <div>Font Color</div>
+      <div>Card Margin</div>
+      <div>Card Padding</div>
+      <div>
+        <input
+          id="check-dark"
+          className="form-ext-input form-ext-input--dark"
+          type="checkbox"
+          onChange={handleBorderSelection}
+          style={{ marginRight: "1%" }}
+        />
+        Border
+      </div>
     </section>
   );
 };
@@ -168,11 +198,21 @@ const InteractivePanel = ({
   title,
   userData,
   selectedRepos,
+  border,
 }) => {
+  // console.log(fontSize, "second")
   const repoList = selectedRepos.map((repo) => {
     return (
-      <div className="grid-cs-3 grid-ce-10">
-        <RepoCard repoData={repo} key={repo.id} hasCheckBox={false} />
+      <div
+        style={{ width: "80%", margin: "auto" }}
+        className="grid-cs-3 grid-ce-10"
+      >
+        <RepoCard
+          repoData={repo}
+          key={repo.id}
+          hasCheckBox={false}
+          hasBorder={border}
+        />
       </div>
     );
   });
@@ -206,7 +246,7 @@ const InteractivePanel = ({
               src={userData?.avatar_url}
               // style={{ borderRadius: "50%", marginLeft: "8em", marginTop: "5em" }}
             />
-            <div
+            {/* <div
               style={{
                 marginLeft: "10%",
                 border: "1px solid black",
@@ -219,7 +259,17 @@ const InteractivePanel = ({
               onClick={() => console.log("select picture")}
             >
               Edit
-            </div>
+            </div> */}
+            <button
+              className="btn--sm btn-light hover-grow"
+              style={{
+                marginLeft: "-17.5%",
+                marginTop: "6%",
+                border: "1px solid black",
+              }}
+            >
+              Edit
+            </button>
 
             <h2
               style={{
@@ -228,16 +278,7 @@ const InteractivePanel = ({
                 fontSize: fontSize,
               }}
             >
-              {firstName}
-            </h2>
-            <h2
-              style={{
-                marginTop: "-8.6%",
-                marginLeft: "60%",
-                fontSize: fontSize,
-              }}
-            >
-              {lastName}
+              {firstName} {lastName}
             </h2>
             <h3
               style={{
@@ -265,8 +306,8 @@ const InteractivePanel = ({
           <FontAwesomeIcon icon={faPlus} style={{ marginRight: "4%" }} />
           Add Content
         </div>
-        {repoList}
       </div>
+      <div style={{ marginTop: "5%" }}>{repoList}</div>
     </section>
   );
 };
@@ -281,17 +322,18 @@ const InteractiveEditor = ({ userData }) => {
   const [lastName, setLastName] = useState("Last Name");
   const [title, setTitle] = useState("Software Engineering Student");
   const [fontSize, setFontSize] = useState("40px");
+  const [border, setBorder] = useState(false);
 
   const location = useLocation();
   const selectedRepos = location?.state?.repos;
 
-  useEffect(() => {
-    console.log(location?.state?.repos, "interactive editor");
-  }, [location]);
+  // useEffect(() => {
+  //   console.log(location?.state?.repos, "interactive editor");
+  // }, [location]);
 
-  // const changeTextSize = () => {
-  //   setTextSize(textSize === "16px" ? "20px" : "16px");
-  // };
+  const handleBorderSelection = () => {
+    setBorder(!border);
+  };
 
   const changeFontColor = () => {
     setSelectedColorType(fontColor);
@@ -339,6 +381,7 @@ const InteractiveEditor = ({ userData }) => {
         userData={userData}
         fontSize={fontSize}
         selectedRepos={selectedRepos}
+        border={border}
       />
       <Sidebar
         // changeTextSize={changeTextSize}
@@ -348,6 +391,8 @@ const InteractiveEditor = ({ userData }) => {
         selectedColorType={selectedColorType}
         handleNameChange={handleNameChange}
         handleFontSizeChange={handleFontSizeChange}
+        handleBorderSelection={handleBorderSelection}
+        fontSize={fontSize}
       />
     </main>
   );
