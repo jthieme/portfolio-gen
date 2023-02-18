@@ -5,7 +5,7 @@ const StyledDiv = styled.div``;
 
 const RepoCard = ({ repoData, key, editingProperties }) => {
   const { name, language, html_url } = repoData;
-  const { handleCheckboxChange, hasCheckBox, hasBorder } = editingProperties;
+  const { handleCheckboxChange, hasCheckBox, hasBorder, hasRepoNameTitle } = editingProperties;
 
   const handleRepoSelection = (event) => {
     handleCheckboxChange(repoData);
@@ -39,7 +39,7 @@ const RepoCard = ({ repoData, key, editingProperties }) => {
                   />
                 </span>
               )}
-              Repo Name: {name}
+              {hasRepoNameTitle && (`Repo Name:`)} {name}
             </summary>
             <p style={{ paddingLeft: "6em" }}>
               Repo language:

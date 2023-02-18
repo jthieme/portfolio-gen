@@ -2,21 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ChromePicker } from "react-color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faChevronDown,
+  faChevronUp,
+} from "@fortawesome/free-solid-svg-icons";
 import RepoCard from "../../Components/RepoList/RepoCard";
 
 const Sidebar = ({
-  // changeTextSize,
   changeFontColor,
   changeBackgroundColor,
-  handleColorChange,
-  selectedColorType,
-  handleNameChange,
-  handleFontSizeChange,
-  handleBorderSelection,
-  fontSize,
   firstName,
+  fontSize, 
+  handleBorderSelection,
+  handleColorChange,
+  handleFontSizeChange,
+  handleNameChange,
   lastName,
+  selectedColorType,
   title,
 }) => {
   const options = [
@@ -78,10 +81,10 @@ const Sidebar = ({
     </option>
   ));
 
-  const [colorSelect, setColorSelect] = useState(false);
-  const [showFontOptions, setShowFontOptions] = useState(false);
+  const [colorSelect,           setColorSelect          ] = useState(false);
+  const [showCardOptions,       setShowCardOptions      ] = useState(false);
   const [showBackgroundOptions, setShowBackgroundOptions] = useState(false);
-  const [showCardOptions, setShowCardOptions] = useState(false);
+  const [showFontOptions,       setShowFontOptions      ] = useState(false);
 
   return (
     <section
@@ -94,8 +97,6 @@ const Sidebar = ({
       }}
       className="grid-c-4 grid-r-4"
     >
-      {/* <h3 style={{ textAlign: "center"}}>Sidebar</h3>
-      <div className="divider" style={{marginTop: "-2%"}}/> */}
       <div
         style={{ marginTop: "2%" }}
         className="u-flex u-justify-space-evenly"
@@ -109,7 +110,14 @@ const Sidebar = ({
         style={{ cursor: "pointer" }}
         onClick={() => setShowFontOptions(!showFontOptions)}
       >
-        <h5 style={{ textAlign: "center" }}>Font Options</h5>
+        <h5 style={{ textAlign: "center" }}>
+          {showFontOptions ? (
+            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }}/>
+          ) : (
+            <FontAwesomeIcon icon={faChevronDown} style={{ marginRight: "4%" }}/>
+          )}
+          Font Options
+        </h5>
       </div>
       <div className="divider" style={{ marginTop: "-2%" }} />
       {showFontOptions && (
@@ -124,9 +132,6 @@ const Sidebar = ({
           >
             {optionElements}
           </select>
-          {/* <button className="btn--xs" onClick={changeTextSize}>
-        Change Text Size
-      </button> */}
           <button className="btn--xs" onClick={changeFontColor}>
             Change Font Color
           </button>
@@ -182,7 +187,14 @@ const Sidebar = ({
         style={{ cursor: "pointer" }}
         onClick={() => setShowBackgroundOptions(!showBackgroundOptions)}
       >
-        <h5 style={{ textAlign: "center" }}>Background Options</h5>
+        <h5 style={{ textAlign: "center" }}>
+        {showBackgroundOptions ? (
+            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }}/>
+          ) : (
+            <FontAwesomeIcon icon={faChevronDown} style={{ marginRight: "4%" }}/>
+          )}
+          Background Options
+        </h5>
       </div>
       <div className="divider" style={{ marginTop: "-2%" }} />
       {showBackgroundOptions && (
@@ -196,7 +208,14 @@ const Sidebar = ({
         style={{ cursor: "pointer" }}
         onClick={() => setShowCardOptions(!showCardOptions)}
       >
-        <h5 style={{ textAlign: "center" }}>Repo Card Options</h5>
+        <h5 style={{ textAlign: "center" }}>
+        {showCardOptions ? (
+            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }}/>
+          ) : (
+            <FontAwesomeIcon icon={faChevronDown} style={{ marginRight: "4%" }}/>
+          )}
+          Repo Card Options
+        </h5>
       </div>
       <div className="divider" style={{ marginTop: "-2%" }} />
       {showCardOptions && (
@@ -222,21 +241,21 @@ const Sidebar = ({
 };
 
 const InteractivePanel = ({
-  fontSize,
-  // textSize,
-  fontColor,
   backgroundColor,
+  border,
+  fontColor,
+  fontSize,
   firstName,
   lastName,
+  selectedRepos,
   title,
   userData,
-  selectedRepos,
-  border,
 }) => {
 
   const editingProperties = {
     hasCheckBox: false,
     hasBorder: border,
+    hasRepoNameTitle: false
   };
 
   const repoList = selectedRepos.map((repo) => {
@@ -258,13 +277,12 @@ const InteractivePanel = ({
     <section
       className="grid-c-8 grid-r-4"
       style={{
-        // fontSize: fontSize,
-        color: fontColor,
-        backgroundColor: backgroundColor,
-        marginLeft: "1%",
-        height: "650px",
-        overflow: "auto",
         border: "1px solid black",
+        backgroundColor: backgroundColor,
+        color: fontColor,
+        height: "650px",
+        marginLeft: "1%",
+        overflow: "auto",
       }}
     >
       <div className="grid u-gap-1">
@@ -281,22 +299,7 @@ const InteractivePanel = ({
               }}
               className="grid-cols-1"
               src={userData?.avatar_url}
-              // style={{ borderRadius: "50%", marginLeft: "8em", marginTop: "5em" }}
             />
-            {/* <div
-              style={{
-                marginLeft: "10%",
-                border: "1px solid black",
-                width: "7%",
-                borderRadius: "6px",
-                textAlign: "center",
-                backgroundColor: "#e6e6e6",
-                cursor: "pointer",
-              }}
-              onClick={() => console.log("select picture")}
-            >
-              Edit
-            </div> */}
             <button
               className="btn--sm btn-light hover-grow"
               style={{
@@ -351,22 +354,18 @@ const InteractivePanel = ({
 
 const InteractiveEditor = ({ userData }) => {
   // const [textSize, setTextSize] = useState("16px");
-  const [fontColor, setFontColor] = useState("#000");
-  const [backgroundColor, setBackgroundColor] = useState("#fff");
-  const [selectedColorType, setSelectedColorType] = useState(fontColor);
+  const [backgroundColor,     setBackgroundColor    ] = useState("#fff");
+  const [border,              setBorder             ] = useState(false);
+  const [firstName,           setFirstName          ] = useState("First Name");
+  const [fontColor,           setFontColor          ] = useState("#000");
+  const [fontSize,            setFontSize           ] = useState("40px");
+  const [lastName,            setLastName           ] = useState("Last Name");
   const [selectedColorTarget, setSelectedColorTarget] = useState("font");
-  const [firstName, setFirstName] = useState("First Name");
-  const [lastName, setLastName] = useState("Last Name");
-  const [title, setTitle] = useState("Software Engineering Student");
-  const [fontSize, setFontSize] = useState("40px");
-  const [border, setBorder] = useState(false);
+  const [selectedColorType,   setSelectedColorType  ] = useState(fontColor);
+  const [title,               setTitle              ] = useState("Software Engineering Student");
 
   const location = useLocation();
   const selectedRepos = location?.state?.repos;
-
-  // useEffect(() => {
-  //   console.log(location?.state?.repos, "interactive editor");
-  // }, [location]);
 
   const handleBorderSelection = () => {
     setBorder(!border);
@@ -409,27 +408,25 @@ const InteractiveEditor = ({ userData }) => {
   return (
     <main className="grid u-gap-1">
       <InteractivePanel
-        // textSize={textSize}
-        fontColor={fontColor}
         backgroundColor={backgroundColor}
+        border={border}
+        fontColor={fontColor}
+        fontSize={fontSize}
         firstName={firstName}
         lastName={lastName}
+        selectedRepos={selectedRepos}
         title={title}
         userData={userData}
-        fontSize={fontSize}
-        selectedRepos={selectedRepos}
-        border={border}
       />
       <Sidebar
-        // changeTextSize={changeTextSize}
-        changeFontColor={changeFontColor}
         changeBackgroundColor={changeBackgroundColor}
-        handleColorChange={handleColorChange}
-        selectedColorType={selectedColorType}
-        handleNameChange={handleNameChange}
-        handleFontSizeChange={handleFontSizeChange}
-        handleBorderSelection={handleBorderSelection}
+        changeFontColor={changeFontColor}
         fontSize={fontSize}
+        handleBorderSelection={handleBorderSelection}
+        handleColorChange={handleColorChange}
+        handleFontSizeChange={handleFontSizeChange}
+        handleNameChange={handleNameChange}
+        selectedColorType={selectedColorType}
       />
     </main>
   );

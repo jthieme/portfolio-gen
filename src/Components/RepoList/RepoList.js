@@ -22,6 +22,7 @@ const RepoList = ({ userData, handleCheckboxChange }) => {
     handleCheckboxChange: handleCheckboxChange,
     hasCheckBox: true,
     hasBorder: true,
+    hasRepoNameTitle: true
   }
 
   const repoList = userRepoList.map((repo) => {
