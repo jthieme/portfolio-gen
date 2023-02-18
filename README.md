@@ -13,7 +13,9 @@ Use ProPort today! Get hired tomorrow!
 
 ### Screenshots
 Account Page
+<!-- <img src="/assets/account-page.png" width="800" />  -->
 ![Account Page](assets/account-page.png)
 
 Editing Page
+<!-- <img src="/assets/account-edit.png" width="800" />  -->
 ![Account Editing Page](assets/account-edit.png)
