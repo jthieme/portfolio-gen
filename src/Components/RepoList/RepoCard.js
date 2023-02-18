@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 const StyledDiv = styled.div``;
 
-const RepoCard = ({ repoData, key, handleCheckboxChange, hasCheckBox, hasBorder }) => {
+const RepoCard = ({ repoData, key, editingProperties }) => {
   const { name, language, html_url } = repoData;
+  const { handleCheckboxChange, hasCheckBox, hasBorder } = editingProperties;
 
   const handleRepoSelection = (event) => {
     handleCheckboxChange(repoData);
@@ -17,7 +18,6 @@ const RepoCard = ({ repoData, key, handleCheckboxChange, hasCheckBox, hasBorder 
           className="grid-c-1 u-duration-300"
           key={key}
           style={{
-            
             border: hasBorder ? "1px solid black" : "",
             marginBottom: 5,
             marginLeft: 20,

@@ -17,15 +17,20 @@ const RepoList = ({ userData, handleCheckboxChange }) => {
         setUserRepoList(data);
       });
   }, [userRepoList]);
+
+  const editingProperties = {
+    handleCheckboxChange: handleCheckboxChange,
+    hasCheckBox: true,
+    hasBorder: true,
+  }
+
   const repoList = userRepoList.map((repo) => {
     return (
       <div className="grid-cs-3 grid-ce-10">
         <RepoCard
           repoData={repo}
           key={repo.id}
-          handleCheckboxChange={handleCheckboxChange}
-          hasCheckBox={true}
-          hasBorder={true}
+          editingProperties={editingProperties}
         />
       </div>
     );

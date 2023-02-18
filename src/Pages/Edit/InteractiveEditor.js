@@ -233,7 +233,12 @@ const InteractivePanel = ({
   selectedRepos,
   border,
 }) => {
-  // console.log(fontSize, "second")
+
+  const editingProperties = {
+    hasCheckBox: false,
+    hasBorder: border,
+  };
+
   const repoList = selectedRepos.map((repo) => {
     return (
       <div
@@ -243,8 +248,7 @@ const InteractivePanel = ({
         <RepoCard
           repoData={repo}
           key={repo.id}
-          hasCheckBox={false}
-          hasBorder={border}
+          editingProperties={editingProperties}
         />
       </div>
     );
