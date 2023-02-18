@@ -13,7 +13,9 @@ Use ProPort today! Get hired tomorrow!
 
 ### Screenshots
 Account Page
-![Account Page](https://github.com/jthieme/portfolio-gen/blob/master/assets/account-page.PNG)
+<!-- <img src="/assets/account-page.png" width="800" />  -->
+![Account Page](assets/account-page.png)
 
 Editing Page
-![Account Editing Page](https://github.com/jthieme/portfolio-gen/blob/master/assets/account-edit.PNG)
+<!-- <img src="/assets/account-edit.png" width="800" />  -->
+![Account Editing Page](assets/account-edit.png)
