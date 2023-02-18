@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import RepoList from "../../Components/RepoList/RepoList";
-import InteractiveEditor from "../Edit/InteractiveEditor";
-// import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const StyledDiv = styled.div`
@@ -14,8 +12,6 @@ const StyledDiv = styled.div`
 `;
 
 const Account = ({ userData }) => {
-  // console.log(userData, "account page - user data")
-  // console.log(userData.repos_url)
 
   const [selectedRepos, setSelectedRepos] = useState([]);
 
@@ -28,16 +24,17 @@ const Account = ({ userData }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(selectedRepos, "selectedRepos");
-  }, [selectedRepos]);
-
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/account/edit", { state: { repos: selectedRepos } });
-  };
+    if (selectedRepos.length === 0) {
+      alert("You must select at least one repo to showcase.");
+    } else {
 
+      document.getElementById("submit-btn").classList.add("loading"); 
+      setTimeout(() => {navigate("/account/edit", { state: { repos: selectedRepos } });}, 1000);
+    }
+  };
   
   return (
     <>
@@ -47,7 +44,8 @@ const Account = ({ userData }) => {
           handleCheckboxChange={handleCheckboxChange}
         />
         <StyledDiv
-          className="grid-cs-6 grid-ce-7 btn bg-orange-500"
+          id="submit-btn"
+          className="grid-cs-6 grid-ce-7 btn bg-orange-500 animated hide-text "
           onClick={handleClick}
         >
           Submit
