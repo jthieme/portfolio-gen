@@ -6,6 +6,7 @@ import {
   faPlus,
   faChevronDown,
   faChevronUp,
+  faUndo
 } from "@fortawesome/free-solid-svg-icons";
 import RepoCard from "../../Components/RepoList/RepoCard";
 
@@ -19,6 +20,7 @@ const Sidebar = ({
   handleFontSizeChange,
   handleNameChange,
   lastName,
+  resetFontColor,
   selectedColorType,
   title,
 }) => {
@@ -132,16 +134,37 @@ const Sidebar = ({
           >
             {optionElements}
           </select>
-          <button className="btn--xs" onClick={changeFontColor}>
-            Change Font Color
-          </button>
-          <br />
-          <button
-            className="btn--xs"
-            onClick={() => setColorSelect(!colorSelect)}
-          >
-            Select Color
-          </button>
+          <label style={{marginLeft: "3%"}}>Font Color</label>
+          <span>
+            <div
+              style={{
+              display: "inline-block",
+              backgroundColor: selectedColorType,
+              width: "30px",
+              height: "30px",
+              borderRadius: "10%",
+              marginRight: "10px",
+              marginBottom: "-1.7%"
+              }}
+              onClick={() => setColorSelect(!colorSelect)}
+            ></div>
+            <span
+              style={{
+                borderRadius: "8%",
+                cursor: "pointer",
+                backgroundColor: "#e0e0e0",
+                paddingTop: "1%",
+                paddingRight: "2%",
+                paddingBottom: "1%",
+                paddingLeft: "2%",
+              }}
+              onClick={resetFontColor}
+            > 
+              <FontAwesomeIcon icon={faUndo} style={{ marginRight: "1%" }}/>
+              Reset
+            </span>
+          </span>
+          
           {colorSelect && (
             <div style={{ marginLeft: "5%" }}>
               <ChromePicker
@@ -150,7 +173,7 @@ const Sidebar = ({
               />
             </div>
           )}
-          <br />
+          
           <label style={{ width: "80%" }}>First Name</label>
           <input
             className="input--sm"
@@ -235,7 +258,7 @@ const Sidebar = ({
             Border
           </div>
         </>
-      )}
+      )}      
     </section>
   );
 };
@@ -388,6 +411,7 @@ const InteractiveEditor = ({ userData }) => {
     } else {
       setBackgroundColor(hex);
     }
+    setSelectedColorType(hex);
   };
 
   const handleNameChange = (e) => {
@@ -405,6 +429,9 @@ const InteractiveEditor = ({ userData }) => {
     setFontSize(e.target.value);
   };
 
+  const resetFontColor = () => {
+    setFontColor("#000000");
+  }
   return (
     <main className="grid u-gap-1">
       <InteractivePanel
@@ -427,6 +454,7 @@ const InteractiveEditor = ({ userData }) => {
         handleFontSizeChange={handleFontSizeChange}
         handleNameChange={handleNameChange}
         selectedColorType={selectedColorType}
+        resetFontColor={resetFontColor}
       />
     </main>
   );
