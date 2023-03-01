@@ -6,6 +6,7 @@ import Home from "./Pages/Home/Home";
 import Account from "./Pages/Account/Account";
 import DefaultHome from "./Pages/Home/DefaultHome";
 import InteractiveEditor from "./Pages/Edit/InteractiveEditor";
+import Preview from "./Pages/View/Preview";
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/" element={<DefaultHome />} />
         )}
         <Route path="/account/edit" element={<InteractiveEditor userData={userData}/>} />
+        <Route path="/account/preview" element={<Preview userData={userData}/>} />
       </Routes>
     </Router>
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ChromePicker } from "react-color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,6 +22,7 @@ const Sidebar = ({
   lastName,
   resetFontColor,
   selectedColorType,
+  portfolioAttributes,
   title,
 }) => {
   const options = [
@@ -73,6 +74,14 @@ const Sidebar = ({
     "100px",
   ];
 
+
+
+  const navigate = useNavigate();
+
+  function handlePreview() {
+    navigate("/account/preview", { state: portfolioAttributes });
+  };
+
   const optionElements = options.map((option, index) => (
     <option
       key={index}
@@ -104,7 +113,7 @@ const Sidebar = ({
         className="u-flex u-justify-space-evenly"
       >
         <button className="bg-gray-500 hover-grow">Save</button>
-        <button className="btn-dark hover-grow">Preview</button>
+        <button className="btn-dark hover-grow" onClick={handlePreview}>Preview</button>
         <button className="bg-orange-500 btn--lg hover-grow">Publish</button>
       </div>
       <div className="divider" style={{ marginTop: "-2%" }} />
@@ -390,6 +399,28 @@ const InteractiveEditor = ({ userData }) => {
   const location = useLocation();
   const selectedRepos = location?.state?.repos;
 
+  const portfolioAttributes = {
+    "avatarImg": userData.avatar_url,
+    "fontOptions": {
+      "firstName": firstName,
+      "lastName": lastName,
+      "title": title,
+      "size": fontSize,
+      "color": selectedColorType,
+    },
+    "backgroundOptions": {
+      "color": ""
+    },
+    "repoCardOptions": {
+      "repoList": selectedRepos,
+      "hasBorder": border,
+      "fontOptions" : {
+        "size": "",
+        "color": "",
+      }
+    }
+  };
+
   const handleBorderSelection = () => {
     setBorder(!border);
   };
@@ -455,6 +486,7 @@ const InteractiveEditor = ({ userData }) => {
         handleNameChange={handleNameChange}
         selectedColorType={selectedColorType}
         resetFontColor={resetFontColor}
+        portfolioAttributes={portfolioAttributes}
       />
     </main>
   );
