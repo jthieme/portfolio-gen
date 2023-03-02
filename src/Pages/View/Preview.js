@@ -6,14 +6,16 @@ const View = () => {
   const location = useLocation();
   const documentAttributes = location?.state;
 
+  const {fontOptions, backgroundOptions, repoCardOptions} = documentAttributes;
+
   console.log(documentAttributes);
 
   const editingProperties = {
-    hasBorder: documentAttributes.repoCardOptions.hasBorder,
+    hasBorder: repoCardOptions.hasBorder,
     hasCheckBox: false,
   };
 
-  const repoList = documentAttributes?.repoCardOptions?.repoList?.map((repo) => {
+  const repoList = repoCardOptions?.repoList?.map((repo) => {
     return (
       <div
         style={{ width: "80%", margin: "auto" }}
@@ -32,7 +34,7 @@ const View = () => {
     <section
       className="grid-c-8 grid-r-4"
       style={{
-        backgroundColor: documentAttributes.backgroundOptions.color,
+        backgroundColor: backgroundOptions.color,
         height: "650px",
         margin: "auto",
         overflow: "auto",
@@ -58,21 +60,21 @@ const View = () => {
               style={{
                 marginTop: "-14%",
                 marginLeft: "32%",
-                fontSize: documentAttributes.fontOptions.size,
-                color: documentAttributes.fontOptions.color
+                fontSize: fontOptions.size,
+                color: fontOptions.color
               }}
             >
-              {documentAttributes.fontOptions.firstName} {documentAttributes.fontOptions.lastName}
+              {fontOptions.firstName} {fontOptions.lastName}
             </h2>
             <h3
               style={{
                 marginTop: "-2%",
                 marginLeft: "32%",
-                fontSize: documentAttributes.fontOptions.size,
-                color: documentAttributes.fontOptions.color
+                fontSize: fontOptions.titleSize,
+                color: fontOptions.color
               }}
             >
-              {documentAttributes.fontOptions.title}
+              {fontOptions.title}
             </h3>
           </div>
         </div>

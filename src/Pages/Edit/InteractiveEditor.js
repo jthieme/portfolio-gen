@@ -6,7 +6,7 @@ import {
   faPlus,
   faChevronDown,
   faChevronUp,
-  faUndo
+  faUndo,
 } from "@fortawesome/free-solid-svg-icons";
 import RepoCard from "../../Components/RepoList/RepoCard";
 
@@ -14,14 +14,16 @@ const Sidebar = ({
   changeFontColor,
   changeBackgroundColor,
   firstName,
-  fontSize, 
+  fontSize,
   handleBorderSelection,
   handleColorChange,
   handleFontSizeChange,
+  handleTitleFontSizeChange,
   handleNameChange,
   lastName,
   resetFontColor,
   selectedColorType,
+  titleFontSize,
   portfolioAttributes,
   title,
 }) => {
@@ -74,13 +76,11 @@ const Sidebar = ({
     "100px",
   ];
 
-
-
   const navigate = useNavigate();
 
   function handlePreview() {
     navigate("/account/preview", { state: portfolioAttributes });
-  };
+  }
 
   const optionElements = options.map((option, index) => (
     <option
@@ -92,10 +92,10 @@ const Sidebar = ({
     </option>
   ));
 
-  const [colorSelect,           setColorSelect          ] = useState(false);
-  const [showCardOptions,       setShowCardOptions      ] = useState(false);
+  const [colorSelect, setColorSelect] = useState(false);
+  const [showCardOptions, setShowCardOptions] = useState(false);
   const [showBackgroundOptions, setShowBackgroundOptions] = useState(false);
-  const [showFontOptions,       setShowFontOptions      ] = useState(false);
+  const [showFontOptions, setShowFontOptions] = useState(false);
 
   return (
     <section
@@ -113,7 +113,9 @@ const Sidebar = ({
         className="u-flex u-justify-space-evenly"
       >
         <button className="bg-gray-500 hover-grow">Save</button>
-        <button className="btn-dark hover-grow" onClick={handlePreview}>Preview</button>
+        <button className="btn-dark hover-grow" onClick={handlePreview}>
+          Preview
+        </button>
         <button className="bg-orange-500 btn--lg hover-grow">Publish</button>
       </div>
       <div className="divider" style={{ marginTop: "-2%" }} />
@@ -123,9 +125,12 @@ const Sidebar = ({
       >
         <h5 style={{ textAlign: "center" }}>
           {showFontOptions ? (
-            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }}/>
+            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }} />
           ) : (
-            <FontAwesomeIcon icon={faChevronDown} style={{ marginRight: "4%" }}/>
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              style={{ marginRight: "4%" }}
+            />
           )}
           Font Options
         </h5>
@@ -143,17 +148,17 @@ const Sidebar = ({
           >
             {optionElements}
           </select>
-          <label style={{marginLeft: "3%"}}>Font Color</label>
+          <label style={{ marginLeft: "3%" }}>Font Color</label>
           <span>
             <div
               style={{
-              display: "inline-block",
-              backgroundColor: selectedColorType,
-              width: "30px",
-              height: "30px",
-              borderRadius: "10%",
-              marginRight: "10px",
-              marginBottom: "-1.7%"
+                display: "inline-block",
+                backgroundColor: selectedColorType,
+                width: "30px",
+                height: "30px",
+                borderRadius: "10%",
+                marginRight: "10px",
+                marginBottom: "-1.7%",
               }}
               onClick={() => setColorSelect(!colorSelect)}
             ></div>
@@ -168,12 +173,12 @@ const Sidebar = ({
                 paddingLeft: "2%",
               }}
               onClick={resetFontColor}
-            > 
-              <FontAwesomeIcon icon={faUndo} style={{ marginRight: "1%" }}/>
+            >
+              <FontAwesomeIcon icon={faUndo} style={{ marginRight: "1%" }} />
               Reset
             </span>
           </span>
-          
+
           {colorSelect && (
             <div style={{ marginLeft: "5%" }}>
               <ChromePicker
@@ -182,7 +187,7 @@ const Sidebar = ({
               />
             </div>
           )}
-          
+
           <label style={{ width: "80%" }}>First Name</label>
           <input
             className="input--sm"
@@ -213,6 +218,16 @@ const Sidebar = ({
             placeholder="Software Engineering Student"
             style={{ width: "58%", marginLeft: "5%" }}
           />
+          <label>Font Size</label>
+          <select
+            className="input--xs"
+            id="fontSize"
+            value={titleFontSize}
+            onChange={handleTitleFontSizeChange}
+            style={{ width: "20%" }}
+          >
+            {optionElements}
+          </select>
         </>
       )}
       <div
@@ -220,10 +235,13 @@ const Sidebar = ({
         onClick={() => setShowBackgroundOptions(!showBackgroundOptions)}
       >
         <h5 style={{ textAlign: "center" }}>
-        {showBackgroundOptions ? (
-            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }}/>
+          {showBackgroundOptions ? (
+            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }} />
           ) : (
-            <FontAwesomeIcon icon={faChevronDown} style={{ marginRight: "4%" }}/>
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              style={{ marginRight: "4%" }}
+            />
           )}
           Background Options
         </h5>
@@ -241,10 +259,13 @@ const Sidebar = ({
         onClick={() => setShowCardOptions(!showCardOptions)}
       >
         <h5 style={{ textAlign: "center" }}>
-        {showCardOptions ? (
-            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }}/>
+          {showCardOptions ? (
+            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }} />
           ) : (
-            <FontAwesomeIcon icon={faChevronDown} style={{ marginRight: "4%" }}/>
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              style={{ marginRight: "4%" }}
+            />
           )}
           Repo Card Options
         </h5>
@@ -267,7 +288,7 @@ const Sidebar = ({
             Border
           </div>
         </>
-      )}      
+      )}
     </section>
   );
 };
@@ -280,14 +301,16 @@ const InteractivePanel = ({
   firstName,
   lastName,
   selectedRepos,
+  selectedImage,
+  setSelectedImage,
   title,
+  titleFontSize,
   userData,
 }) => {
-
   const editingProperties = {
     hasCheckBox: false,
     hasBorder: border,
-    hasRepoNameTitle: false
+    hasRepoNameTitle: false,
   };
 
   const repoList = selectedRepos.map((repo) => {
@@ -311,7 +334,7 @@ const InteractivePanel = ({
       style={{
         border: "1px solid black",
         backgroundColor: backgroundColor,
-        color: fontColor,
+        // color: fontColor,
         height: "650px",
         marginLeft: "1%",
         overflow: "auto",
@@ -331,7 +354,9 @@ const InteractivePanel = ({
               }}
               className="grid-cols-1"
               src={userData?.avatar_url}
+              
             />
+            <input type="file" accept="image/*" id="select-img" style={{display: "none"}} onChange={e => setSelectedImage(e.target.files[0])}/>
             <button
               className="btn--sm btn-light hover-grow"
               style={{
@@ -339,7 +364,9 @@ const InteractivePanel = ({
                 marginTop: "6%",
                 border: "1px solid black",
               }}
-            >
+              htmlFor="select-img"
+              onClick={() => document.getElementById('select-img')?.click()}
+              >
               Edit
             </button>
 
@@ -348,6 +375,7 @@ const InteractivePanel = ({
                 marginTop: "-25%",
                 marginLeft: "32%",
                 fontSize: fontSize,
+                color: fontColor
               }}
             >
               {firstName} {lastName}
@@ -356,7 +384,8 @@ const InteractivePanel = ({
               style={{
                 marginTop: "-3%",
                 marginLeft: "32%",
-                fontSize: fontSize,
+                fontSize: titleFontSize,
+                color: fontColor
               }}
             >
               {title}
@@ -386,39 +415,43 @@ const InteractivePanel = ({
 
 const InteractiveEditor = ({ userData }) => {
   // const [textSize, setTextSize] = useState("16px");
-  const [backgroundColor,     setBackgroundColor    ] = useState("#fff");
-  const [border,              setBorder             ] = useState(false);
-  const [firstName,           setFirstName          ] = useState("First Name");
-  const [fontColor,           setFontColor          ] = useState("#000");
-  const [fontSize,            setFontSize           ] = useState("40px");
-  const [lastName,            setLastName           ] = useState("Last Name");
+  const [backgroundColor, setBackgroundColor] = useState("#fff");
+  const [border, setBorder] = useState(false);
+  const [firstName, setFirstName] = useState("First Name");
+  const [fontColor, setFontColor] = useState("#000");
+  const [fontSize, setFontSize] = useState("40px");
+  const [lastName, setLastName] = useState("Last Name");
   const [selectedColorTarget, setSelectedColorTarget] = useState("font");
-  const [selectedColorType,   setSelectedColorType  ] = useState(fontColor);
-  const [title,               setTitle              ] = useState("Software Engineering Student");
+  const [selectedColorType, setSelectedColorType] = useState(fontColor);
+  const [title, setTitle] = useState("Software Engineering Student");
+  const [titleFontSize, setTitleFontSize] = useState("20px");
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const location = useLocation();
   const selectedRepos = location?.state?.repos;
 
   const portfolioAttributes = {
-    "avatarImg": userData.avatar_url,
-    "fontOptions": {
-      "firstName": firstName,
-      "lastName": lastName,
-      "title": title,
-      "size": fontSize,
-      "color": selectedColorType,
+    avatarImg: userData.avatar_url,
+    chosenImg: selectedImage,
+    fontOptions: {
+      firstName: firstName,
+      lastName: lastName,
+      title: title,
+      titleSize: titleFontSize,
+      size: fontSize,
+      color: selectedColorType,
     },
-    "backgroundOptions": {
-      "color": ""
+    backgroundOptions: {
+      color: "",
     },
-    "repoCardOptions": {
-      "repoList": selectedRepos,
-      "hasBorder": border,
-      "fontOptions" : {
-        "size": "",
-        "color": "",
-      }
-    }
+    repoCardOptions: {
+      repoList: selectedRepos,
+      hasBorder: border,
+      fontOptions: {
+        size: "",
+        color: "",
+      },
+    },
   };
 
   const handleBorderSelection = () => {
@@ -460,9 +493,14 @@ const InteractiveEditor = ({ userData }) => {
     setFontSize(e.target.value);
   };
 
+  const handleTitleFontSizeChange = (e) => {
+    setTitleFontSize(e.target.value);
+  };
+
   const resetFontColor = () => {
     setFontColor("#000000");
-  }
+    setSelectedColorType("#000000");
+  };
   return (
     <main className="grid u-gap-1">
       <InteractivePanel
@@ -473,7 +511,10 @@ const InteractiveEditor = ({ userData }) => {
         firstName={firstName}
         lastName={lastName}
         selectedRepos={selectedRepos}
+        selectedImage={selectedImage}
+        setSelectedImage={setSelectedImage}
         title={title}
+        titleFontSize={titleFontSize}
         userData={userData}
       />
       <Sidebar
@@ -483,8 +524,10 @@ const InteractiveEditor = ({ userData }) => {
         handleBorderSelection={handleBorderSelection}
         handleColorChange={handleColorChange}
         handleFontSizeChange={handleFontSizeChange}
+        handleTitleFontSizeChange={handleTitleFontSizeChange}
         handleNameChange={handleNameChange}
         selectedColorType={selectedColorType}
+        titleFontSize={titleFontSize}
         resetFontColor={resetFontColor}
         portfolioAttributes={portfolioAttributes}
       />
