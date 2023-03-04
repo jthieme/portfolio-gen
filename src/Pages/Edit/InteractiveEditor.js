@@ -7,6 +7,10 @@ import {
   faChevronDown,
   faChevronUp,
   faUndo,
+  faBriefcase,
+  faAddressCard,
+  faClipboardList,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import RepoCard from "../../Components/RepoList/RepoCard";
 
@@ -159,6 +163,7 @@ const Sidebar = ({
                 borderRadius: "10%",
                 marginRight: "10px",
                 marginBottom: "-1.7%",
+                cursor: "pointer",
               }}
               onClick={() => setColorSelect(!colorSelect)}
             ></div>
@@ -287,6 +292,9 @@ const Sidebar = ({
             />
             Border
           </div>
+          <div>List View</div>
+          <div>Carousel View</div>
+          <div>Card View</div>
         </>
       )}
     </section>
@@ -312,6 +320,8 @@ const InteractivePanel = ({
     hasBorder: border,
     hasRepoNameTitle: false,
   };
+
+  const [populateOptions, setPopulateOptions] = useState(false);
 
   const repoList = selectedRepos.map((repo) => {
     return (
@@ -354,9 +364,14 @@ const InteractivePanel = ({
               }}
               className="grid-cols-1"
               src={userData?.avatar_url}
-              
             />
-            <input type="file" accept="image/*" id="select-img" style={{display: "none"}} onChange={e => setSelectedImage(e.target.files[0])}/>
+            <input
+              type="file"
+              accept="image/*"
+              id="select-img"
+              style={{ display: "none" }}
+              onChange={(e) => setSelectedImage(e.target.files[0])}
+            />
             <button
               className="btn--sm btn-light hover-grow"
               style={{
@@ -365,8 +380,8 @@ const InteractivePanel = ({
                 border: "1px solid black",
               }}
               htmlFor="select-img"
-              onClick={() => document.getElementById('select-img')?.click()}
-              >
+              onClick={() => document.getElementById("select-img")?.click()}
+            >
               Edit
             </button>
 
@@ -375,7 +390,7 @@ const InteractivePanel = ({
                 marginTop: "-25%",
                 marginLeft: "32%",
                 fontSize: fontSize,
-                color: fontColor
+                color: fontColor,
               }}
             >
               {firstName} {lastName}
@@ -385,7 +400,7 @@ const InteractivePanel = ({
                 marginTop: "-3%",
                 marginLeft: "32%",
                 fontSize: titleFontSize,
-                color: fontColor
+                color: fontColor,
               }}
             >
               {title}
@@ -393,20 +408,58 @@ const InteractivePanel = ({
           </div>
         </div>
         <div
-          className="grid-c-3 grid-r-1 grid-cs-5 grid-ce-8"
+          className="grid-c-3 grid-r-1 grid-cs-5 grid-ce-7"
           style={{
-            padding: 40,
-            marginTop: "24%",
+            padding: 20,
+            marginTop: "40%",
             border: "1px solid black",
             textAlign: "center",
             cursor: "pointer",
             borderRadius: "10px",
           }}
-          onClick={() => console.log("click")}
+          onClick={() => {
+            setPopulateOptions(!populateOptions);
+          }}
         >
           <FontAwesomeIcon icon={faPlus} style={{ marginRight: "4%" }} />
           Add Content
         </div>
+        {populateOptions && (
+          <div className="grid-c-4 grid-r-1 grid-cs-4 grid-ce-8">
+            <div class="u-z-10 ... bg-gray-000 u-shadow-xl u-round-xs row u-gap-2 p-0 u-justify-center">
+              <div class="u-flex u-justify-space-evenly">
+                <div
+                  class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
+                  data-tooltip="Add About Me"
+                  onClick={() => console.log("Clicked About Me")}
+                >
+                  <FontAwesomeIcon icon={faUser} />
+                </div>
+                <div
+                  class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
+                  data-tooltip="Add Work Experience"
+                  onClick={() => console.log("Clicked Work Experience")}
+                >
+                  <FontAwesomeIcon icon={faBriefcase} />
+                </div>
+                <div
+                  class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
+                  data-tooltip="Add Summary"
+                  onClick={() => console.log("Clicked Summary")}
+                >
+                  <FontAwesomeIcon icon={faClipboardList} />
+                </div>
+                <div
+                  class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
+                  data-tooltip="Add Contact Info"
+                  onClick={() => console.log("Clicked Contact Info")}
+                >
+                  <FontAwesomeIcon icon={faAddressCard} />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <div style={{ marginTop: "5%" }}>{repoList}</div>
     </section>

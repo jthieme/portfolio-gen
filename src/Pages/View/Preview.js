@@ -40,6 +40,9 @@ const View = () => {
         overflow: "auto",
       }}
     >
+      
+      <button className="bg-orange-500 btn--lg hover-grow"
+      style={{marginLeft: "85%"}}>Publish</button>
       <div className="grid u-gap-1">
         <div className="grid-cs-2 grid-ce-10 grid-rs-1 grid-re-2">
           <div className="grid-c-8">
