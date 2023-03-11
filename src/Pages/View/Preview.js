@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import RepoCard from "../../Components/RepoList/RepoCard";
 
-const View = () => {
+const Preview = () => {
   const location = useLocation();
   const documentAttributes = location?.state;
 
@@ -58,11 +58,11 @@ const View = () => {
               className="grid-cols-1"
               src={documentAttributes.avatarImg}
             />
-
+  {console.log(fontOptions.marginLeft)}
             <h2
               style={{
                 marginTop: "-14%",
-                marginLeft: "32%",
+                marginLeft: fontOptions.marginLeft,
                 fontSize: fontOptions.size,
                 color: fontOptions.color
               }}
@@ -87,4 +87,4 @@ const View = () => {
   );
 };
 
-export default View;
+export default Preview;

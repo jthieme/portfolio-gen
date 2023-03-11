@@ -29,7 +29,10 @@ const Sidebar = ({
   handleFontSizeChange,
   handleTitleFontSizeChange,
   handleNameChange,
+  handleNameMargin,
   lastName,
+  nameMarginLeft,
+  nameMarginTop,
   resetFontColor,
   selectedColorType,
   titleFontSize,
@@ -198,6 +201,28 @@ const Sidebar = ({
             </div>
           )}
 
+          <div class="form-group" style={{ marginLeft: "2%", width: "95%" }}>
+            <label class="form-group-label label--xs">Spacing</label>
+            <input
+              type="text"
+              class="form-group-input input--xs"
+              placeholder="Width"
+              name="nameMarginLeft"
+              value={nameMarginLeft}
+              onChange={handleNameMargin}
+            />
+            <input
+              type="text"
+              class="form-group-input input--xs"
+              placeholder="Height"
+              name="nameMarginTop"
+              value={nameMarginTop}
+              onChange={handleNameMargin}
+            />
+            <button class="form-group-btn btn--xs">Clear</button>
+            <button class="form-group-btn btn-dark btn--xs">Submit</button>
+          </div>
+
           <label style={{ width: "80%" }}>First Name</label>
           <input
             className="input--sm"
@@ -313,6 +338,8 @@ const InteractivePanel = ({
   fontSize,
   firstName,
   lastName,
+  nameMarginLeft,
+  nameMarginTop,
   selectedRepos,
   selectedImage,
   setSelectedImage,
@@ -398,8 +425,8 @@ const InteractivePanel = ({
 
             <h2
               style={{
-                marginTop: "-25%",
-                marginLeft: "32%",
+                marginTop: nameMarginTop,
+                marginLeft: nameMarginLeft,
                 fontSize: fontSize,
                 color: fontColor,
               }}
@@ -491,6 +518,8 @@ const InteractiveEditor = ({ userData }) => {
   const [title, setTitle] = useState("Software Engineering Student");
   const [titleFontSize, setTitleFontSize] = useState("20px");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [nameMarginLeft, setNameMarginLeft] = useState("32%");
+  const [nameMarginTop, setNameMarginTop] = useState("-25%");
 
   const location = useLocation();
   const selectedRepos = location?.state?.repos;
@@ -505,6 +534,8 @@ const InteractiveEditor = ({ userData }) => {
       titleSize: titleFontSize,
       size: fontSize,
       color: selectedColorType,
+      marginLeft: nameMarginLeft,
+      marginTop: nameMarginTop,
     },
     backgroundOptions: {
       color: "",
@@ -554,6 +585,16 @@ const InteractiveEditor = ({ userData }) => {
     }
   };
 
+  const handleNameMargin = (e) => {
+    const { name, value } = e.target;
+    if (name === "nameMarginLeft") {
+      setNameMarginLeft(value);
+    } else if (name === "nameMarginTop") {
+      setNameMarginTop(value);
+    }
+  };
+  
+
   const handleFontSizeChange = (e) => {
     setFontSize(e.target.value);
   };
@@ -566,6 +607,7 @@ const InteractiveEditor = ({ userData }) => {
     setFontColor("#000000");
     setSelectedColorType("#000000");
   };
+
   return (
     <main className="grid u-gap-1">
       <InteractivePanel
@@ -575,6 +617,8 @@ const InteractiveEditor = ({ userData }) => {
         fontSize={fontSize}
         firstName={firstName}
         lastName={lastName}
+        nameMarginLeft={nameMarginLeft}
+        nameMarginTop={nameMarginTop}
         selectedRepos={selectedRepos}
         selectedImage={selectedImage}
         setSelectedImage={setSelectedImage}
@@ -590,7 +634,10 @@ const InteractiveEditor = ({ userData }) => {
         handleColorChange={handleColorChange}
         handleFontSizeChange={handleFontSizeChange}
         handleTitleFontSizeChange={handleTitleFontSizeChange}
+        handleNameMargin={handleNameMargin}
         handleNameChange={handleNameChange}
+        nameMarginLeft={nameMarginLeft}
+        nameMarginTop={nameMarginTop}
         selectedColorType={selectedColorType}
         titleFontSize={titleFontSize}
         resetFontColor={resetFontColor}
