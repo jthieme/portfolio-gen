@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ChromePicker } from "react-color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +14,10 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import RepoCard from "../../Components/RepoList/RepoCard";
+import AboutMe from "../../Components/AboutMe";
+import WorkExperience from "../../Components/WorkExperience";
+import Summary from "../../Components/Summary";
+import ContactInfo from "../../Components/ContactInfo";
 
 const Sidebar = ({
   changeFontColor,
@@ -338,6 +343,12 @@ const InteractivePanel = ({
     );
   });
 
+  const handleAddComponentSection = (component) => {
+    const container = document.createElement("div");
+    ReactDOM.render(component, container);
+    document.getElementById("test").appendChild(container);
+  };
+
   return (
     <section
       className="grid-c-8 grid-r-4"
@@ -431,28 +442,28 @@ const InteractivePanel = ({
                 <div
                   class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add About Me"
-                  onClick={() => console.log("Clicked About Me")}
+                  onClick={() => handleAddComponentSection(<AboutMe />)}
                 >
                   <FontAwesomeIcon icon={faUser} />
                 </div>
                 <div
                   class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Work Experience"
-                  onClick={() => console.log("Clicked Work Experience")}
+                  onClick={() => handleAddComponentSection(<WorkExperience />)}
                 >
                   <FontAwesomeIcon icon={faBriefcase} />
                 </div>
                 <div
                   class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Summary"
-                  onClick={() => console.log("Clicked Summary")}
+                  onClick={() => handleAddComponentSection(<Summary />)}
                 >
                   <FontAwesomeIcon icon={faClipboardList} />
                 </div>
                 <div
                   class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Contact Info"
-                  onClick={() => console.log("Clicked Contact Info")}
+                  onClick={() => handleAddComponentSection(<ContactInfo />)}
                 >
                   <FontAwesomeIcon icon={faAddressCard} />
                 </div>
@@ -462,6 +473,7 @@ const InteractivePanel = ({
         )}
       </div>
       <div style={{ marginTop: "5%" }}>{repoList}</div>
+      <div id="test"></div>
     </section>
   );
 };
