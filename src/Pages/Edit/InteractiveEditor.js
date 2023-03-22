@@ -372,6 +372,8 @@ const InteractivePanel = ({
 
   const handleAddComponentSection = (component) => {
     const container = document.createElement("div");
+    container.id = "injected";
+    container.className = "grid-cs-2 grid-ce-11";
     ReactDOM.render(component, container);
     document.getElementById("test").appendChild(container);
   };
@@ -500,7 +502,7 @@ const InteractivePanel = ({
         )}
       </div>
       <div style={{ marginTop: "5%" }}>{repoList}</div>
-      <div id="test"></div>
+      <div className="grid u-gap-1" id="test"></div>
     </section>
   );
 };
