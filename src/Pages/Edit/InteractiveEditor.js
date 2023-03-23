@@ -12,6 +12,7 @@ import {
   faAddressCard,
   faClipboardList,
   faUser,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import RepoCard from "../../Components/RepoList/RepoCard";
 import AboutMe from "../../Components/AboutMe";
@@ -34,6 +35,7 @@ const Sidebar = ({
   nameMarginLeft,
   nameMarginTop,
   resetFontColor,
+  sections,
   selectedColorType,
   titleFontSize,
   portfolioAttributes,
@@ -88,6 +90,7 @@ const Sidebar = ({
     "100px",
   ];
 
+  console.log(sections);
   const navigate = useNavigate();
 
   function handlePreview() {
@@ -105,9 +108,10 @@ const Sidebar = ({
   ));
 
   const [colorSelect, setColorSelect] = useState(false);
-  const [showCardOptions, setShowCardOptions] = useState(false);
   const [showBackgroundOptions, setShowBackgroundOptions] = useState(false);
+  const [showCardOptions, setShowCardOptions] = useState(false);
   const [showFontOptions, setShowFontOptions] = useState(false);
+  const [showSectionOptions, setShowSectionOptions] = useState(false);
 
   return (
     <section
@@ -327,6 +331,47 @@ const Sidebar = ({
           <div>Card View</div>
         </>
       )}
+      <div
+        style={{ cursor: "pointer" }}
+        onClick={() => setShowSectionOptions(!showSectionOptions)}
+      >
+        <h5 style={{ textAlign: "center" }}>
+          {showSectionOptions ? (
+            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }} />
+          ) : (
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              style={{ marginRight: "4%" }}
+            />
+          )}
+          Section Options
+        </h5>
+      </div>
+      <div className="divider" style={{ marginTop: "-2%" }} />
+      <div id="blank">
+        {showSectionOptions &&
+          sections.length > 0 &&
+          sections.map((section) => (
+            <div style={{ padding: "1%", marginLeft: "28%", width: "50%" }}>
+              <div
+                style={{
+                  backgroundColor: "#e1e1e1",
+                  marginTop: "1%",
+                  padding: "0.5%",
+                  paddingLeft: "6%"
+                }}
+              >
+                {section.type.name}
+                <span style={{marginLeft: "6%", textAlign: "right"}}>
+                <FontAwesomeIcon icon={faTrash} style={{ marginRight: "4%" }} />
+                </span>
+              </div>
+            </div>
+          ))}
+        {showSectionOptions && sections.length === 0 && (
+          <p>No data in the Sections</p>
+        )}
+      </div>
     </section>
   );
 };
@@ -340,6 +385,7 @@ const InteractivePanel = ({
   lastName,
   nameMarginLeft,
   nameMarginTop,
+  sections,
   selectedRepos,
   selectedImage,
   setSelectedImage,
@@ -371,6 +417,8 @@ const InteractivePanel = ({
   });
 
   const handleAddComponentSection = (component) => {
+    sections.push(component);
+    console.log(sections);
     const container = document.createElement("div");
     container.id = "injected";
     container.className = "grid-cs-2 grid-ce-11";
@@ -471,7 +519,9 @@ const InteractivePanel = ({
                 <div
                   class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add About Me"
-                  onClick={() => handleAddComponentSection(<AboutMe />)}
+                  onClick={() => {
+                    handleAddComponentSection(<AboutMe />);
+                  }}
                 >
                   <FontAwesomeIcon icon={faUser} />
                 </div>
@@ -522,6 +572,8 @@ const InteractiveEditor = ({ userData }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [nameMarginLeft, setNameMarginLeft] = useState("32%");
   const [nameMarginTop, setNameMarginTop] = useState("-25%");
+
+  var sections = [];
 
   const location = useLocation();
   const selectedRepos = location?.state?.repos;
@@ -595,7 +647,6 @@ const InteractiveEditor = ({ userData }) => {
       setNameMarginTop(value);
     }
   };
-  
 
   const handleFontSizeChange = (e) => {
     setFontSize(e.target.value);
@@ -621,6 +672,7 @@ const InteractiveEditor = ({ userData }) => {
         lastName={lastName}
         nameMarginLeft={nameMarginLeft}
         nameMarginTop={nameMarginTop}
+        sections={sections}
         selectedRepos={selectedRepos}
         selectedImage={selectedImage}
         setSelectedImage={setSelectedImage}
@@ -640,6 +692,7 @@ const InteractiveEditor = ({ userData }) => {
         handleNameChange={handleNameChange}
         nameMarginLeft={nameMarginLeft}
         nameMarginTop={nameMarginTop}
+        sections={sections}
         selectedColorType={selectedColorType}
         titleFontSize={titleFontSize}
         resetFontColor={resetFontColor}
