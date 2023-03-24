@@ -11,7 +11,7 @@ const FontInput = ({labelText, value, handleChange, name, placeholder}) => {
         onChange={handleChange}
         name={name}
         placeholder={placeholder}
-        style={{ width: "58%", marginLeft: "5%" }}
+        style={{ width: "48%", marginLeft: "5%" }}
       />
     </>
   );
