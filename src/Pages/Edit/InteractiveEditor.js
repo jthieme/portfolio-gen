@@ -13,12 +13,14 @@ import {
   faClipboardList,
   faUser,
   faTrash,
+  faGripVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import RepoCard from "../../Components/RepoList/RepoCard";
 import AboutMe from "../../Components/AboutMe";
 import WorkExperience from "../../Components/WorkExperience";
 import Summary from "../../Components/Summary";
 import ContactInfo from "../../Components/ContactInfo";
+import SpacingInput from "../../Components/Sidebar/SpacingInput";
 
 const Sidebar = ({
   changeFontColor,
@@ -35,6 +37,7 @@ const Sidebar = ({
   nameMarginLeft,
   nameMarginTop,
   resetFontColor,
+  // removeSection,
   sections,
   selectedColorType,
   titleFontSize,
@@ -205,27 +208,8 @@ const Sidebar = ({
             </div>
           )}
 
-          <div class="form-group" style={{ marginLeft: "2%", width: "95%" }}>
-            <label class="form-group-label label--xs">Spacing</label>
-            <input
-              type="text"
-              class="form-group-input input--xs"
-              placeholder="Width"
-              name="nameMarginLeft"
-              value={nameMarginLeft}
-              onChange={handleNameMargin}
-            />
-            <input
-              type="text"
-              class="form-group-input input--xs"
-              placeholder="Height"
-              name="nameMarginTop"
-              value={nameMarginTop}
-              onChange={handleNameMargin}
-            />
-            <button class="form-group-btn btn--xs">Clear</button>
-            <button class="form-group-btn btn-dark btn--xs">Submit</button>
-          </div>
+          <SpacingInput labelText={"X"} name="nameMarginLeft" nameMargin={nameMarginLeft} handleMargin={handleNameMargin}/>
+          <SpacingInput labelText={"Y"} name="nameMarginTop" nameMargin={nameMarginTop} handleMargin={handleNameMargin}/>
 
           <label style={{ width: "80%" }}>First Name</label>
           <input
@@ -358,12 +342,28 @@ const Sidebar = ({
                   backgroundColor: "#e1e1e1",
                   marginTop: "1%",
                   padding: "0.5%",
-                  paddingLeft: "6%"
+                  paddingLeft: "6%",
                 }}
               >
+                <span>
+                  <FontAwesomeIcon
+                    icon={faGripVertical}
+                    style={{ marginRight: "4%", cursor: "pointer" }}
+                  />
+                </span>
                 {section.type.name}
-                <span style={{marginLeft: "6%", textAlign: "right"}}>
-                <FontAwesomeIcon icon={faTrash} style={{ marginRight: "4%" }} />
+                <span
+                  style={{
+                    marginLeft: "6%",
+                    textAlign: "right",
+                    cursor: "pointer",
+                  }}
+                  // onClick={removeSection(section)}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    style={{ marginRight: "4%" }}
+                  />
                 </span>
               </div>
             </div>
@@ -575,6 +575,11 @@ const InteractiveEditor = ({ userData }) => {
 
   var sections = [];
 
+  // const removeSection = (component) => {
+  //   let index = sections.indexOf(component);
+  //   sections.splice(index, 1);
+  // };
+
   const location = useLocation();
   const selectedRepos = location?.state?.repos;
 
@@ -692,6 +697,7 @@ const InteractiveEditor = ({ userData }) => {
         handleNameChange={handleNameChange}
         nameMarginLeft={nameMarginLeft}
         nameMarginTop={nameMarginTop}
+        // removeSection={removeSection}
         sections={sections}
         selectedColorType={selectedColorType}
         titleFontSize={titleFontSize}
