@@ -21,6 +21,8 @@ import WorkExperience from "../../Components/WorkExperience";
 import Summary from "../../Components/Summary";
 import ContactInfo from "../../Components/ContactInfo";
 import SpacingInput from "../../Components/Sidebar/SpacingInput";
+import DropDownOptions from "../../Components/Sidebar/DropDownOptions";
+import FontInput from "../../Components/Sidebar/FontInput";
 
 const Sidebar = ({
   changeFontColor,
@@ -138,23 +140,12 @@ const Sidebar = ({
         <button className="bg-orange-500 btn--lg hover-grow">Publish</button>
       </div>
       <div className="divider" style={{ marginTop: "-2%" }} />
-      <div
-        style={{ cursor: "pointer" }}
-        onClick={() => setShowFontOptions(!showFontOptions)}
-      >
-        <h5 style={{ textAlign: "center" }}>
-          {showFontOptions ? (
-            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }} />
-          ) : (
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              style={{ marginRight: "4%" }}
-            />
-          )}
-          Font Options
-        </h5>
-      </div>
-      <div className="divider" style={{ marginTop: "-2%" }} />
+
+      <DropDownOptions
+        showFunction={() => setShowFontOptions(!showFontOptions)}
+        showOption={showFontOptions}
+        hLabel={"Font Options"}
+      />
       {showFontOptions && (
         <>
           <label>Font Size</label>
@@ -208,38 +199,39 @@ const Sidebar = ({
             </div>
           )}
 
-          <SpacingInput labelText={"X"} name="nameMarginLeft" nameMargin={nameMarginLeft} handleMargin={handleNameMargin}/>
-          <SpacingInput labelText={"Y"} name="nameMarginTop" nameMargin={nameMarginTop} handleMargin={handleNameMargin}/>
+          <SpacingInput
+            labelText={"X"}
+            name="nameMarginLeft"
+            nameMargin={nameMarginLeft}
+            handleMargin={handleNameMargin}
+          />
+          <SpacingInput
+            labelText={"Y"}
+            name="nameMarginTop"
+            nameMargin={nameMarginTop}
+            handleMargin={handleNameMargin}
+          />
 
-          <label style={{ width: "80%" }}>First Name</label>
-          <input
-            className="input--sm"
-            type="text"
+          <FontInput
+            labelText={"First Name"}
             value={firstName}
-            onChange={handleNameChange}
-            name="firstName"
-            placeholder="First Name"
-            style={{ width: "58%", marginLeft: "5%" }}
+            handleChange={handleNameChange}
+            name={"firstName"}
+            placeholder={"First Name"}
           />
-          <label style={{ width: "80%" }}>Last Name</label>
-          <input
-            className="input--sm"
-            type="text"
+          <FontInput
+            labelText={"Last Name"}
             value={lastName}
-            onChange={handleNameChange}
-            name="lastName"
-            placeholder="Last Name"
-            style={{ width: "58%", marginLeft: "5%" }}
+            handleChange={handleNameChange}
+            name={"lastName"}
+            placeholder={"Last Name"}
           />
-          <label style={{ width: "80%" }}>Title</label>
-          <input
-            className="input--sm"
-            type="text"
+          <FontInput
+            labelText={"Title"}
             value={title}
-            onChange={handleNameChange}
-            name="title"
-            placeholder="Software Engineering Student"
-            style={{ width: "58%", marginLeft: "5%" }}
+            handleChange={handleNameChange}
+            name={"title"}
+            placeholder={"Software Engineering Student"}
           />
           <label>Font Size</label>
           <select
@@ -253,23 +245,12 @@ const Sidebar = ({
           </select>
         </>
       )}
-      <div
-        style={{ cursor: "pointer" }}
-        onClick={() => setShowBackgroundOptions(!showBackgroundOptions)}
-      >
-        <h5 style={{ textAlign: "center" }}>
-          {showBackgroundOptions ? (
-            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }} />
-          ) : (
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              style={{ marginRight: "4%" }}
-            />
-          )}
-          Background Options
-        </h5>
-      </div>
-      <div className="divider" style={{ marginTop: "-2%" }} />
+
+      <DropDownOptions
+        showFunction={() => setShowBackgroundOptions(!showBackgroundOptions)}
+        showOption={showBackgroundOptions}
+        hLabel={"Background Options"}
+      />
       {showBackgroundOptions && (
         <>
           <button className="btn--xs" onClick={changeBackgroundColor}>
@@ -277,23 +258,12 @@ const Sidebar = ({
           </button>
         </>
       )}
-      <div
-        style={{ cursor: "pointer" }}
-        onClick={() => setShowCardOptions(!showCardOptions)}
-      >
-        <h5 style={{ textAlign: "center" }}>
-          {showCardOptions ? (
-            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }} />
-          ) : (
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              style={{ marginRight: "4%" }}
-            />
-          )}
-          Repo Card Options
-        </h5>
-      </div>
-      <div className="divider" style={{ marginTop: "-2%" }} />
+
+      <DropDownOptions
+        showFunction={() => setShowCardOptions(!showCardOptions)}
+        showOption={showCardOptions}
+        hLabel={"Repo Card Options"}
+      />
       {showCardOptions && (
         <>
           <div>Font Size</div>
@@ -315,23 +285,12 @@ const Sidebar = ({
           <div>Card View</div>
         </>
       )}
-      <div
-        style={{ cursor: "pointer" }}
-        onClick={() => setShowSectionOptions(!showSectionOptions)}
-      >
-        <h5 style={{ textAlign: "center" }}>
-          {showSectionOptions ? (
-            <FontAwesomeIcon icon={faChevronUp} style={{ marginRight: "4%" }} />
-          ) : (
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              style={{ marginRight: "4%" }}
-            />
-          )}
-          Section Options
-        </h5>
-      </div>
-      <div className="divider" style={{ marginTop: "-2%" }} />
+
+      <DropDownOptions
+        showFunction={() => setShowSectionOptions(!showSectionOptions)}
+        showOption={showSectionOptions}
+        hLabel={"Section Options"}
+      />
       <div id="blank">
         {showSectionOptions &&
           sections.length > 0 &&
