@@ -5,8 +5,6 @@ import { ChromePicker } from "react-color";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
-  faChevronDown,
-  faChevronUp,
   faUndo,
   faBriefcase,
   faAddressCard,
