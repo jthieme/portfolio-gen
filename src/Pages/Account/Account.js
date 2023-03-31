@@ -32,7 +32,7 @@ const Account = ({ userData }) => {
     } else {
 
       document.getElementById("submit-btn").classList.add("loading"); 
-      setTimeout(() => {navigate("/account/edit", { state: { repos: selectedRepos } });}, 1000);
+      setTimeout(() => {navigate(`/${userData.login}/edit`, { state: { repos: selectedRepos } });}, 1000);
     }
   };
   

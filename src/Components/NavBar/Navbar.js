@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const NavBar = ({ userData }) => {
   const [reRender, setReRender] = useState(false);
-  // const [accessToken, setAccessToken] = useState("");
+  // const [accessToken, setAccessToken] = useState(false);
 
   const SERVER_URL = window.ENV.REACT_APP_SERVER_URL; // this should be set in your .env file
   const CLIENT_ID = window.ENV.CLIENT_ID;
@@ -44,7 +44,8 @@ const NavBar = ({ userData }) => {
 
   const userLogout = () => {
     localStorage.removeItem("accessToken");
-    setReRender(!reRender);
+    // setReRender(!reRender);
+    window.location.assign("http://localhost:3000");
   };
 
   const githubLogin = () => {
@@ -58,7 +59,7 @@ const NavBar = ({ userData }) => {
       <div className="header header-dark u-unselectable header-animated px-0 px-2-md">
         <div className="header-brand">
           <div className="nav-item no-hover">
-            <a href="/">
+            <a href={localStorage.getItem("accessToken") ? "/home" : "/"}>
               <h6 className="tracking-tight">ProPort</h6>
             </a>
           </div>
@@ -69,13 +70,19 @@ const NavBar = ({ userData }) => {
               <div>
                 <StyledAvatar src={userData.avatar_url} />
               </div>
-              <div className="nav-item no-hover" style={{ padding: 0, cursor: "default" }}>
-                <div style={{ padding: 5, cursor: "default"}}>
+              <div
+                className="nav-item no-hover"
+                style={{ padding: 0, cursor: "default" }}
+              >
+                <div style={{ padding: 5, cursor: "default" }}>
                   Hey, {userData.login}
                 </div>
               </div>
               <div className="nav-item">
-                <a className="btn btn-white btn--sm py-0 hover-grow" onClick={userLogout}>
+                <a
+                  className="btn btn-white btn--sm py-0 hover-grow"
+                  onClick={userLogout}
+                >
                   Logout
                 </a>
               </div>
@@ -84,7 +91,10 @@ const NavBar = ({ userData }) => {
         ) : (
           <div className="nav-right text">
             <div className="nav-item">
-              <a className="btn btn-white btn--sm py-0 hover-grow" onClick={githubLogin}>
+              <a
+                className="btn btn-white btn--sm py-0 hover-grow"
+                onClick={githubLogin}
+              >
                 Login
               </a>
             </div>

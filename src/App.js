@@ -38,12 +38,14 @@ function App() {
       <NavBar userData={userData} />
       <Routes>
         {localStorage.getItem("accessToken") ? (
-          <Route path="/account" element={<Account userData={userData}/>} />
+          // <Route path="/account" element={<Account userData={userData}/>} />
+          <Route path="/home" element={<Home userData={userData}/>} />
         ) : (
           <Route path="/" element={<DefaultHome />} />
         )}
-        <Route path="/account/edit" element={<InteractiveEditor userData={userData}/>} />
-        <Route path="/account/preview" element={<Preview userData={userData}/>} />
+        <Route path={`/${userData.login}`} element={<Account userData={userData}/>} />
+        <Route path={`/${userData.login}/edit`} element={<InteractiveEditor userData={userData}/>} />
+        <Route path={`/${userData.login}/preview`} element={<Preview userData={userData}/>} />
       </Routes>
     </Router>
 

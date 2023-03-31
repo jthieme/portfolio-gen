@@ -11,6 +11,15 @@ const largeDiv = styled.div`
 `;
 
 const DefaultHome = () => {
+
+  const CLIENT_ID = window.ENV.CLIENT_ID;
+  
+  const githubLogin = () => {
+    window.location.assign(
+      `https://github.com/login/oauth/authorize?client_id=` + CLIENT_ID
+    );
+  };
+
   return (
     // <largeDiv>
     <div>
@@ -26,12 +35,14 @@ const DefaultHome = () => {
           <button
             className="bg-orange-500 text-white"
             style={{ marginLeft: "3%" }}
+            onClick={githubLogin}
           >
             Sign Up
           </button>
         </div>
       </div>
-      <div style={{ backgroundColor: "#1e1e1e" }} className="text-white">
+      {/* <div style={{ backgroundColor: "#1e1e1e" }} className="text-white"> */}
+      <div style={{ background: "linear-gradient( #1e1e1e 65%, #ff5a1f)" }} className="text-white">
         <h2 style={{ textAlign: "center", paddingTop: "2%" }}>What We Do</h2>
         <div style={{ padding: "5%", paddingLeft: "6%", display: "flex" }}>
           <LoggedOutTile
