@@ -33,16 +33,21 @@ const Sidebar = ({
   handleTitleFontSizeChange,
   handleNameChange,
   handleNameMargin,
+  handleRepoCardFontColor,
+  handleRepoCardFontSize,
   lastName,
   nameMarginLeft,
   nameMarginTop,
   resetFontColor,
   // removeSection,
+  repoCardFontColor,
+  repoCardFontSize,
   sections,
   selectedColorType,
   titleFontSize,
   portfolioAttributes,
   title,
+  userData
 }) => {
   const options = [
     "10px",
@@ -97,7 +102,7 @@ const Sidebar = ({
   const navigate = useNavigate();
 
   function handlePreview() {
-    navigate("/account/preview", { state: portfolioAttributes });
+    navigate(`/${userData.login}/preview`, { state: portfolioAttributes });
   }
 
   const optionElements = options.map((option, index) => (
@@ -264,8 +269,40 @@ const Sidebar = ({
       />
       {showCardOptions && (
         <>
-          <div>Font Size</div>
+          <FontInput
+            labelText={"Font Size"}
+            value={repoCardFontSize}
+            handleChange={handleRepoCardFontSize}
+            placeholder={"Font Size"}
+          />
+          {/* <FontInput
+            labelText={"Font Color"}
+            value={repoCardFontColor}
+            handleChange={handleRepoCardFontColor}
+            placeholder={"Font Color"}
+          /> */}
           <div>Font Color</div>
+          <div
+              style={{
+                display: "inline-block",
+                backgroundColor: selectedColorType,
+                width: "30px",
+                height: "30px",
+                borderRadius: "10%",
+                marginRight: "10px",
+                marginBottom: "-1.7%",
+                cursor: "pointer",
+              }}
+              onClick={() => setColorSelect(!colorSelect)}
+            ></div>
+            {colorSelect && (
+            <div style={{ marginLeft: "5%" }}>
+              <ChromePicker
+                color={selectedColorType}
+                onChange={handleColorChange}
+              />
+            </div>
+          )}
           <div>Card Margin</div>
           <div>Card Padding</div>
           <div>
@@ -342,6 +379,8 @@ const InteractivePanel = ({
   lastName,
   nameMarginLeft,
   nameMarginTop,
+  repoCardFontColor,
+  repoCardFontSize,
   sections,
   selectedRepos,
   selectedImage,
@@ -354,6 +393,8 @@ const InteractivePanel = ({
     hasCheckBox: false,
     hasBorder: border,
     hasRepoNameTitle: false,
+    fontSize: repoCardFontSize,
+    fontColor: repoCardFontColor
   };
 
   const [populateOptions, setPopulateOptions] = useState(false);
@@ -526,6 +567,8 @@ const InteractiveEditor = ({ userData }) => {
   const [selectedColorType, setSelectedColorType] = useState(fontColor);
   const [title, setTitle] = useState("Software Engineering Student");
   const [titleFontSize, setTitleFontSize] = useState("20px");
+  const [repoCardFontColor, setRepoCardFontColor] = useState("000");
+  const [repoCardFontSize, setRepoCardFontSize] = useState("20px");
   const [selectedImage, setSelectedImage] = useState(null);
   const [nameMarginLeft, setNameMarginLeft] = useState("32%");
   const [nameMarginTop, setNameMarginTop] = useState("-25%");
@@ -568,6 +611,14 @@ const InteractiveEditor = ({ userData }) => {
 
   const handleBorderSelection = () => {
     setBorder(!border);
+  };
+
+  const handleRepoCardFontColor = (color) => {
+    setRepoCardFontColor(color);
+  };
+
+  const handleRepoCardFontSize = (e) => {
+    setRepoCardFontSize(e.target.value);
   };
 
   const changeFontColor = () => {
@@ -634,6 +685,8 @@ const InteractiveEditor = ({ userData }) => {
         lastName={lastName}
         nameMarginLeft={nameMarginLeft}
         nameMarginTop={nameMarginTop}
+        repoCardFontColor={repoCardFontColor}
+        repoCardFontSize={repoCardFontSize}
         sections={sections}
         selectedRepos={selectedRepos}
         selectedImage={selectedImage}
@@ -652,14 +705,19 @@ const InteractiveEditor = ({ userData }) => {
         handleTitleFontSizeChange={handleTitleFontSizeChange}
         handleNameMargin={handleNameMargin}
         handleNameChange={handleNameChange}
+        handleRepoCardFontColor={handleRepoCardFontColor}
+        handleRepoCardFontSize={handleRepoCardFontSize}
         nameMarginLeft={nameMarginLeft}
         nameMarginTop={nameMarginTop}
         // removeSection={removeSection}
+        repoCardFontColor={repoCardFontColor}
+        repoCardFontSize={repoCardFontSize}
         sections={sections}
         selectedColorType={selectedColorType}
         titleFontSize={titleFontSize}
         resetFontColor={resetFontColor}
         portfolioAttributes={portfolioAttributes}
+        userData={userData}
       />
     </main>
   );
