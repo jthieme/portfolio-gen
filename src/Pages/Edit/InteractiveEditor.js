@@ -116,6 +116,7 @@ const Sidebar = ({
   ));
 
   const [colorSelect, setColorSelect] = useState(false);
+  const [repoColorSelect, setRepoColorSelect] = useState(false);
   const [showBackgroundOptions, setShowBackgroundOptions] = useState(false);
   const [showCardOptions, setShowCardOptions] = useState(false);
   const [showFontOptions, setShowFontOptions] = useState(false);
@@ -275,17 +276,11 @@ const Sidebar = ({
             handleChange={handleRepoCardFontSize}
             placeholder={"Font Size"}
           />
-          {/* <FontInput
-            labelText={"Font Color"}
-            value={repoCardFontColor}
-            handleChange={handleRepoCardFontColor}
-            placeholder={"Font Color"}
-          /> */}
           <div>Font Color</div>
           <div
               style={{
                 display: "inline-block",
-                backgroundColor: selectedColorType,
+                backgroundColor: repoCardFontColor,
                 width: "30px",
                 height: "30px",
                 borderRadius: "10%",
@@ -293,13 +288,13 @@ const Sidebar = ({
                 marginBottom: "-1.7%",
                 cursor: "pointer",
               }}
-              onClick={() => setColorSelect(!colorSelect)}
+              onClick={() => setRepoColorSelect(!repoColorSelect)}
             ></div>
-            {colorSelect && (
+            {repoColorSelect && (
             <div style={{ marginLeft: "5%" }}>
               <ChromePicker
-                color={selectedColorType}
-                onChange={handleColorChange}
+                color={repoCardFontColor}
+                onChange={handleRepoCardFontColor}
               />
             </div>
           )}
@@ -567,7 +562,7 @@ const InteractiveEditor = ({ userData }) => {
   const [selectedColorType, setSelectedColorType] = useState(fontColor);
   const [title, setTitle] = useState("Software Engineering Student");
   const [titleFontSize, setTitleFontSize] = useState("20px");
-  const [repoCardFontColor, setRepoCardFontColor] = useState("000");
+  const [repoCardFontColor, setRepoCardFontColor] = useState(fontColor);
   const [repoCardFontSize, setRepoCardFontSize] = useState("20px");
   const [selectedImage, setSelectedImage] = useState(null);
   const [nameMarginLeft, setNameMarginLeft] = useState("32%");
@@ -614,7 +609,8 @@ const InteractiveEditor = ({ userData }) => {
   };
 
   const handleRepoCardFontColor = (color) => {
-    setRepoCardFontColor(color);
+    const { hex } = color;
+    setRepoCardFontColor(hex);
   };
 
   const handleRepoCardFontSize = (e) => {
