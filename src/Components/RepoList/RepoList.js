@@ -44,7 +44,7 @@ const RepoList = ({ userData, handleCheckboxChange }) => {
         The following is a list of all your <i>public</i> repos.
         <br />
         If you want to showcase any of these, simply click on the checkbox, and
-        press the "Submit" button.
+        press the "Submit" button at the bottom of the page.
       </p>
       {/* <button className="btn--sm">Select All</button> */}
       {repoList}

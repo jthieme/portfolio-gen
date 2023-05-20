@@ -239,6 +239,7 @@ const Sidebar = ({
         showOption={showCardOptions}
         hLabel={"Repo Card Options"}
       />
+
       {showCardOptions && (
         <>
           <FontInput
@@ -257,8 +258,39 @@ const Sidebar = ({
             resetColor={resetRepoFontColor}
           />
 
-          <div>Card Margin</div>
-          <div>Card Padding</div>
+          <label>Card Margin</label>
+          <SpacingInput
+            labelText={"X"}
+            name="nameMarginLeft"
+            nameMargin={nameMarginLeft}
+            handleMargin={handleNameMargin}
+          />
+          
+          <SpacingInput
+            labelText={"Y"}
+            name="nameMarginTop"
+            nameMargin={nameMarginTop}
+            handleMargin={handleNameMargin}
+          />
+
+          <div>
+
+            <label>Card Padding</label>
+            <SpacingInput
+              labelText={"X"}
+              name="nameMarginLeft"
+              nameMargin={nameMarginLeft}
+              handleMargin={handleNameMargin}
+              />
+
+            <SpacingInput
+              labelText={"Y"}
+              name="nameMarginTop"
+              nameMargin={nameMarginTop}
+              handleMargin={handleNameMargin}
+              />
+          </div>
+          
           <div>
             <input
               id="check-dark"
