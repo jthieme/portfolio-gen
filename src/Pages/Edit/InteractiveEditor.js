@@ -21,6 +21,7 @@ import ContactInfo from "../../Components/ContactInfo";
 import SpacingInput from "../../Components/Sidebar/SpacingInput";
 import DropDownOptions from "../../Components/Sidebar/DropDownOptions";
 import FontInput from "../../Components/Sidebar/FontInput";
+import FontColorSelect from "../../Components/Sidebar/FontColorSelect";
 
 const Sidebar = ({
   changeFontColor,
@@ -39,6 +40,7 @@ const Sidebar = ({
   nameMarginLeft,
   nameMarginTop,
   resetFontColor,
+  resetRepoFontColor,
   // removeSection,
   repoCardFontColor,
   repoCardFontSize,
@@ -47,7 +49,7 @@ const Sidebar = ({
   titleFontSize,
   portfolioAttributes,
   title,
-  userData
+  userData,
 }) => {
   const options = [
     "10px",
@@ -162,46 +164,15 @@ const Sidebar = ({
           >
             {optionElements}
           </select>
-          <label style={{ marginLeft: "3%" }}>Font Color</label>
-          <span>
-            <div
-              style={{
-                display: "inline-block",
-                backgroundColor: selectedColorType,
-                width: "30px",
-                height: "30px",
-                borderRadius: "10%",
-                marginRight: "10px",
-                marginBottom: "-1.7%",
-                cursor: "pointer",
-              }}
-              onClick={() => setColorSelect(!colorSelect)}
-            ></div>
-            <span
-              style={{
-                borderRadius: "8%",
-                cursor: "pointer",
-                backgroundColor: "#e0e0e0",
-                paddingTop: "1%",
-                paddingRight: "2%",
-                paddingBottom: "1%",
-                paddingLeft: "2%",
-              }}
-              onClick={resetFontColor}
-            >
-              <FontAwesomeIcon icon={faUndo} style={{ marginRight: "1%" }} />
-              Reset
-            </span>
-          </span>
 
-          {colorSelect && (
-            <div style={{ marginLeft: "5%" }}>
-              <ChromePicker
-                color={selectedColorType}
-                onChange={handleColorChange}
-              />
-            </div>
-          )}
+          <FontColorSelect
+            bgColor={selectedColorType}
+            cPChange={handleColorChange}
+            cPColor={selectedColorType}
+            colorSelect={colorSelect}
+            setColor={() => setColorSelect(!colorSelect)}
+            resetColor={resetFontColor}
+          />
 
           <SpacingInput
             labelText={"X"}
@@ -276,28 +247,16 @@ const Sidebar = ({
             handleChange={handleRepoCardFontSize}
             placeholder={"Font Size"}
           />
-          <div>Font Color</div>
-          <div
-              style={{
-                display: "inline-block",
-                backgroundColor: repoCardFontColor,
-                width: "30px",
-                height: "30px",
-                borderRadius: "10%",
-                marginRight: "10px",
-                marginBottom: "-1.7%",
-                cursor: "pointer",
-              }}
-              onClick={() => setRepoColorSelect(!repoColorSelect)}
-            ></div>
-            {repoColorSelect && (
-            <div style={{ marginLeft: "5%" }}>
-              <ChromePicker
-                color={repoCardFontColor}
-                onChange={handleRepoCardFontColor}
-              />
-            </div>
-          )}
+
+          <FontColorSelect
+            bgColor={repoCardFontColor}
+            cPChange={handleRepoCardFontColor}
+            cPColor={repoCardFontColor}
+            colorSelect={repoColorSelect}
+            setColor={() => setRepoColorSelect(!repoColorSelect)}
+            resetColor={resetRepoFontColor}
+          />
+
           <div>Card Margin</div>
           <div>Card Padding</div>
           <div>
@@ -389,7 +348,7 @@ const InteractivePanel = ({
     hasBorder: border,
     hasRepoNameTitle: false,
     fontSize: repoCardFontSize,
-    fontColor: repoCardFontColor
+    fontColor: repoCardFontColor,
   };
 
   const [populateOptions, setPopulateOptions] = useState(false);
@@ -670,6 +629,10 @@ const InteractiveEditor = ({ userData }) => {
     setSelectedColorType("#000000");
   };
 
+  const resetRepoFontColor = () => {
+    setRepoCardFontColor("#000000");
+  };
+
   return (
     <main className="grid u-gap-1">
       <InteractivePanel
@@ -712,6 +675,7 @@ const InteractiveEditor = ({ userData }) => {
         selectedColorType={selectedColorType}
         titleFontSize={titleFontSize}
         resetFontColor={resetFontColor}
+        resetRepoFontColor={resetRepoFontColor}
         portfolioAttributes={portfolioAttributes}
         userData={userData}
       />
