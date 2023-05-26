@@ -36,9 +36,12 @@ const Sidebar = ({
   handleNameMargin,
   handleRepoCardFontColor,
   handleRepoCardFontSize,
+  handleRepoMargin,
   lastName,
   nameMarginLeft,
   nameMarginTop,
+  repoMarginLeft,
+  repoMarginBottom,
   resetFontColor,
   resetRepoFontColor,
   // removeSection,
@@ -261,49 +264,49 @@ const Sidebar = ({
           <label>Card Margin</label>
           <SpacingInput
             labelText={"X"}
-            name="nameMarginLeft"
-            nameMargin={nameMarginLeft}
-            handleMargin={handleNameMargin}
+            name="repoMarginLeft"
+            nameMargin={repoMarginLeft}
+            handleMargin={handleRepoMargin}
           />
-          
+
           <SpacingInput
             labelText={"Y"}
-            name="nameMarginTop"
-            nameMargin={nameMarginTop}
-            handleMargin={handleNameMargin}
+            name="repoMarginBottom"
+            nameMargin={repoMarginBottom}
+            handleMargin={handleRepoMargin}
           />
 
-          <div>
-
-            <label>Card Padding</label>
+          <div style={{ marginLeft: "1.2%" }}>
+            <label style={{marginRight: "-1px"}}>Card Padding</label>
             <SpacingInput
               labelText={"X"}
               name="nameMarginLeft"
               nameMargin={nameMarginLeft}
               handleMargin={handleNameMargin}
-              />
+            />
 
             <SpacingInput
               labelText={"Y"}
               name="nameMarginTop"
               nameMargin={nameMarginTop}
               handleMargin={handleNameMargin}
-              />
-          </div>
-          
-          <div>
-            <input
-              id="check-dark"
-              className="form-ext-input form-ext-input--dark"
-              type="checkbox"
-              onChange={handleBorderSelection}
-              style={{ marginRight: "1%" }}
             />
-            Border
+
+            <div style={{ marginLeft: "1.2%", marginRight: "2%", display: "inline" }}>
+              Border
+              <input
+                id="check-dark"
+                className="form-ext-input form-ext-input--dark"
+                type="checkbox"
+                onChange={handleBorderSelection}
+                style={{ paddingLeft: "1%", marginLeft: "1%" }}
+              />
+            </div>
           </div>
-          <div>List View</div>
+
+          {/* <div>List View</div>
           <div>Carousel View</div>
-          <div>Card View</div>
+          <div>Card View</div> */}
         </>
       )}
 
@@ -367,6 +370,8 @@ const InteractivePanel = ({
   nameMarginTop,
   repoCardFontColor,
   repoCardFontSize,
+  repoMarginLeft,
+  repoMarginBottom,
   sections,
   selectedRepos,
   selectedImage,
@@ -381,6 +386,8 @@ const InteractivePanel = ({
     hasRepoNameTitle: false,
     fontSize: repoCardFontSize,
     fontColor: repoCardFontColor,
+    marginLeft: repoMarginLeft,
+    marginBottom: repoMarginBottom
   };
 
   const [populateOptions, setPopulateOptions] = useState(false);
@@ -558,6 +565,8 @@ const InteractiveEditor = ({ userData }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [nameMarginLeft, setNameMarginLeft] = useState("32%");
   const [nameMarginTop, setNameMarginTop] = useState("-25%");
+  const [repoMarginLeft, setRepoMarginLeft] = useState("2%");
+  const [repoMarginBottom, setRepoMarginBottom] = useState("0%");
 
   var sections = [];
 
@@ -648,6 +657,15 @@ const InteractiveEditor = ({ userData }) => {
     }
   };
 
+  const handleRepoMargin = (e) => {
+    const { name, value } = e.target;
+    if (name === "repoMarginLeft") {
+      setRepoMarginLeft(value);
+    } else if (name === "repoMarginBottom") {
+      setRepoMarginBottom(value);
+    }
+  };
+
   const handleFontSizeChange = (e) => {
     setFontSize(e.target.value);
   };
@@ -676,6 +694,8 @@ const InteractiveEditor = ({ userData }) => {
         lastName={lastName}
         nameMarginLeft={nameMarginLeft}
         nameMarginTop={nameMarginTop}
+        repoMarginLeft={repoMarginLeft}
+        repoMarginBottom={repoMarginBottom}
         repoCardFontColor={repoCardFontColor}
         repoCardFontSize={repoCardFontSize}
         sections={sections}
@@ -696,10 +716,13 @@ const InteractiveEditor = ({ userData }) => {
         handleTitleFontSizeChange={handleTitleFontSizeChange}
         handleNameMargin={handleNameMargin}
         handleNameChange={handleNameChange}
+        handleRepoMargin={handleRepoMargin}
         handleRepoCardFontColor={handleRepoCardFontColor}
         handleRepoCardFontSize={handleRepoCardFontSize}
         nameMarginLeft={nameMarginLeft}
         nameMarginTop={nameMarginTop}
+        repoMarginLeft={repoMarginLeft}
+        repoMarginBottom={repoMarginBottom}
         // removeSection={removeSection}
         repoCardFontColor={repoCardFontColor}
         repoCardFontSize={repoCardFontSize}

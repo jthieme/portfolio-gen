@@ -5,7 +5,7 @@ const StyledDiv = styled.div``;
 
 const RepoCard = ({ repoData, key, editingProperties }) => {
   const { name, language, html_url } = repoData;
-  const { handleCheckboxChange, hasCheckBox, hasBorder, hasRepoNameTitle, fontSize, fontColor } = editingProperties;
+  const { handleCheckboxChange, hasCheckBox, hasBorder, hasRepoNameTitle, fontSize, fontColor, marginLeft, marginBottom } = editingProperties;
 
   const handleRepoSelection = (event) => {
     handleCheckboxChange(repoData);
@@ -19,8 +19,8 @@ const RepoCard = ({ repoData, key, editingProperties }) => {
           key={key}
           style={{
             border: hasBorder ? "1px solid black" : "",
-            marginBottom: 5,
-            marginLeft: 20,
+            marginBottom: marginBottom,
+            marginLeft: marginLeft,
             borderRadius: 10,
           }}
         >
