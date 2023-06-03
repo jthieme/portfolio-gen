@@ -10,8 +10,6 @@ import {
   faAddressCard,
   faClipboardList,
   faUser,
-  faTrash,
-  faGripVertical,
 } from "@fortawesome/free-solid-svg-icons";
 import RepoCard from "../../Components/RepoList/RepoCard";
 import AboutMe from "../../Components/AboutMe";
@@ -22,6 +20,7 @@ import SpacingInput from "../../Components/Sidebar/SpacingInput";
 import DropDownOptions from "../../Components/Sidebar/DropDownOptions";
 import FontInput from "../../Components/Sidebar/FontInput";
 import FontColorSelect from "../../Components/Sidebar/FontColorSelect";
+import SectionCard from "../../Components/Sidebar/SectionCard";
 
 const Sidebar = ({
   changeFontColor,
@@ -47,7 +46,7 @@ const Sidebar = ({
   // removeSection,
   repoCardFontColor,
   repoCardFontSize,
-  sections,
+  sectionComponents,
   selectedColorType,
   titleFontSize,
   portfolioAttributes,
@@ -103,7 +102,7 @@ const Sidebar = ({
     "100px",
   ];
 
-  console.log(sections);
+  console.log(sectionComponents);
   const navigate = useNavigate();
 
   function handlePreview() {
@@ -322,7 +321,7 @@ const Sidebar = ({
         hLabel={"Section Options"}
       />
       <div id="blank">
-        {showSectionOptions &&
+        {/* {showSectionOptions &&
           sections.length > 0 &&
           sections.map((section) => (
             <div style={{ padding: "1%", marginLeft: "28%", width: "50%" }}>
@@ -356,8 +355,14 @@ const Sidebar = ({
                 </span>
               </div>
             </div>
+          ))} */}
+
+        {showSectionOptions &&
+          sectionComponents.length > 0 &&
+          sectionComponents.map((section, index) => (
+            <SectionCard section={section} index={index} />
           ))}
-        {showSectionOptions && sections.length === 0 && (
+        {showSectionOptions && sectionComponents.length === 0 && (
           <p>No data in the Sections</p>
         )}
       </div>
@@ -378,7 +383,8 @@ const InteractivePanel = ({
   repoCardFontSize,
   repoMarginLeft,
   repoMarginBottom,
-  sections,
+  sectionComponents,
+  setSectionComponents,
   selectedRepos,
   selectedImage,
   setSelectedImage,
@@ -398,29 +404,42 @@ const InteractivePanel = ({
 
   const [populateOptions, setPopulateOptions] = useState(false);
 
-  const repoList = selectedRepos.map((repo) => {
-    return (
-      <div
-        style={{ width: "80%", margin: "auto" }}
-        className="grid-cs-3 grid-ce-10"
-      >
-        <RepoCard
-          repoData={repo}
-          key={repo.id}
-          editingProperties={editingProperties}
-        />
-      </div>
-    );
+  const sections = sectionComponents.map((section) => {
+    if (section.$$typeof) {
+      if (section.type.name === "AboutMe") {
+        return <AboutMe />;
+      }
+      if (section.type.name === "ContactInfo") {
+        return <ContactInfo />;
+      }
+      if (section.type.name === "Summary") {
+        return <Summary />;
+      }
+      if (section.type.name === "WorkExperience") {
+        return <WorkExperience />;
+      }
+    } else {
+      return (
+        <div
+          style={{ width: "80%", margin: "auto" }}
+          className="grid-cs-3 grid-ce-10"
+        >
+          <RepoCard
+            repoData={section}
+            key={section.id}
+            editingProperties={editingProperties}
+          />
+        </div>
+      );
+    }
   });
 
   const handleAddComponentSection = (component) => {
-    sections.push(component);
-    console.log(sections);
-    const container = document.createElement("div");
-    container.id = "injected";
-    container.className = "grid-cs-2 grid-ce-11";
-    ReactDOM.render(component, container);
-    document.getElementById("test").appendChild(container);
+    if (sectionComponents.includes(component)) {
+      console.log(`${component} is already in the portfolio`);
+    } else {
+      setSectionComponents((prevSections) => [...prevSections, component]);
+    }
   };
 
   return (
@@ -511,10 +530,10 @@ const InteractivePanel = ({
         </div>
         {populateOptions && (
           <div className="grid-c-4 grid-r-1 grid-cs-4 grid-ce-8">
-            <div class="u-z-10 ... bg-gray-000 u-shadow-xl u-round-xs row u-gap-2 p-0 u-justify-center">
-              <div class="u-flex u-justify-space-evenly">
+            <div className="u-z-10 ... bg-gray-000 u-shadow-xl u-round-xs row u-gap-2 p-0 u-justify-center">
+              <div className="u-flex u-justify-space-evenly">
                 <div
-                  class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
+                  className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add About Me"
                   onClick={() => {
                     handleAddComponentSection(<AboutMe />);
@@ -523,21 +542,21 @@ const InteractivePanel = ({
                   <FontAwesomeIcon icon={faUser} />
                 </div>
                 <div
-                  class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
+                  className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Work Experience"
                   onClick={() => handleAddComponentSection(<WorkExperience />)}
                 >
                   <FontAwesomeIcon icon={faBriefcase} />
                 </div>
                 <div
-                  class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
+                  className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Summary"
                   onClick={() => handleAddComponentSection(<Summary />)}
                 >
                   <FontAwesomeIcon icon={faClipboardList} />
                 </div>
                 <div
-                  class="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
+                  className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Contact Info"
                   onClick={() => handleAddComponentSection(<ContactInfo />)}
                 >
@@ -548,13 +567,15 @@ const InteractivePanel = ({
           </div>
         )}
       </div>
-      <div style={{ marginTop: "5%" }}>{repoList}</div>
-      <div className="grid u-gap-1" id="test"></div>
+      <div style={{ marginTop: "5%" }}>{sections}</div>
     </section>
   );
 };
 
 const InteractiveEditor = ({ userData }) => {
+  const location = useLocation();
+  const selectedRepos = location?.state?.repos;
+
   // const [textSize, setTextSize] = useState("16px");
   const [backgroundColor, setBackgroundColor] = useState("#fff");
   const [border, setBorder] = useState(false);
@@ -573,6 +594,7 @@ const InteractiveEditor = ({ userData }) => {
   const [nameMarginTop, setNameMarginTop] = useState("-25%");
   const [repoMarginLeft, setRepoMarginLeft] = useState("2%");
   const [repoMarginBottom, setRepoMarginBottom] = useState("0%");
+  const [sectionComponents, setSectionComponents] = useState(selectedRepos);
 
   var sections = [];
 
@@ -580,9 +602,6 @@ const InteractiveEditor = ({ userData }) => {
   //   let index = sections.indexOf(component);
   //   sections.splice(index, 1);
   // };
-
-  const location = useLocation();
-  const selectedRepos = location?.state?.repos;
 
   const portfolioAttributes = {
     avatarImg: userData.avatar_url,
@@ -704,7 +723,9 @@ const InteractiveEditor = ({ userData }) => {
         repoMarginBottom={repoMarginBottom}
         repoCardFontColor={repoCardFontColor}
         repoCardFontSize={repoCardFontSize}
-        sections={sections}
+        // sections={sections}
+        sectionComponents={sectionComponents}
+        setSectionComponents={setSectionComponents}
         selectedRepos={selectedRepos}
         selectedImage={selectedImage}
         setSelectedImage={setSelectedImage}
@@ -732,7 +753,9 @@ const InteractiveEditor = ({ userData }) => {
         // removeSection={removeSection}
         repoCardFontColor={repoCardFontColor}
         repoCardFontSize={repoCardFontSize}
-        sections={sections}
+        // sections={sections}
+        sectionComponents={sectionComponents}
+        setSectionComponents={setSectionComponents}
         selectedColorType={selectedColorType}
         titleFontSize={titleFontSize}
         resetFontColor={resetFontColor}
