@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const BookWrapper = styled.div`
   position: relative;
@@ -74,11 +74,10 @@ const Description = styled.div`
   padding: 10% 10%;
   padding-top: 6%;
   z-index: 1;
-
 `;
 
 const Heading = styled.h1`
-  font-family: 'Pontano Sans', sans-serif;
+  font-family: "Pontano Sans", sans-serif;
   font-size: calc(0.75em + 0.1vw);
   text-align: center;
   line-height: 1.25em;
@@ -93,15 +92,20 @@ const Folder = ({ userData }) => {
 
   return (
     <BookWrapper onMouseEnter={handleHover} onMouseLeave={handleHover}>
-      <Gloss className={isHovered ? 'gloss' : ''} />
-      <Cover className={isHovered ? 'cover' : ''} />
-      <Description className={isHovered ? 'description' : ''}>
+      <Gloss className={isHovered ? "gloss" : ""} />
+      <Cover className={isHovered ? "cover" : ""} />
+      <Description className={isHovered ? "description" : ""}>
         <Heading>{userData.name}'s Portfolio</Heading>
-        <div style={{textAlign: "center", marginTop: "25%"}}>
-
-        <button><a href={`/${userData.login}`}>Select Repos</a></button>
-          <button><a href={""}>Edit Portfolio</a></button>
-          <button><a href={""}>View Portfolio</a></button>
+        <div style={{ textAlign: "center", marginTop: "25%" }}>
+          <button>
+            <a href={`/${userData.login}`}>Select Repos</a>
+          </button>
+          <button>
+            <a href={""}>Edit Portfolio</a>
+          </button>
+          <button>
+            <a href={""}>View Portfolio</a>
+          </button>
         </div>
       </Description>
       <Tab />

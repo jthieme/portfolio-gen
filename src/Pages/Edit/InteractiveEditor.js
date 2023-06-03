@@ -277,7 +277,7 @@ const Sidebar = ({
           />
 
           <div style={{ marginLeft: "1.2%" }}>
-            <label style={{marginRight: "-1px"}}>Card Padding</label>
+            <label style={{ marginRight: "-1px" }}>Card Padding</label>
             <SpacingInput
               labelText={"X"}
               name="nameMarginLeft"
@@ -292,7 +292,13 @@ const Sidebar = ({
               handleMargin={handleNameMargin}
             />
 
-            <div style={{ marginLeft: "1.2%", marginRight: "2%", display: "inline" }}>
+            <div
+              style={{
+                marginLeft: "1.2%",
+                marginRight: "2%",
+                display: "inline",
+              }}
+            >
               Border
               <input
                 id="check-dark"
@@ -387,7 +393,7 @@ const InteractivePanel = ({
     fontSize: repoCardFontSize,
     fontColor: repoCardFontColor,
     marginLeft: repoMarginLeft,
-    marginBottom: repoMarginBottom
+    marginBottom: repoMarginBottom,
   };
 
   const [populateOptions, setPopulateOptions] = useState(false);

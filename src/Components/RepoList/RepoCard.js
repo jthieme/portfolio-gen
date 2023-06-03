@@ -5,7 +5,16 @@ const StyledDiv = styled.div``;
 
 const RepoCard = ({ repoData, key, editingProperties }) => {
   const { name, language, html_url } = repoData;
-  const { handleCheckboxChange, hasCheckBox, hasBorder, hasRepoNameTitle, fontSize, fontColor, marginLeft, marginBottom } = editingProperties;
+  const {
+    handleCheckboxChange,
+    hasCheckBox,
+    hasBorder,
+    hasRepoNameTitle,
+    fontSize,
+    fontColor,
+    marginLeft,
+    marginBottom,
+  } = editingProperties;
 
   const handleRepoSelection = (event) => {
     handleCheckboxChange(repoData);
@@ -28,7 +37,7 @@ const RepoCard = ({ repoData, key, editingProperties }) => {
             <summary
               className="accordion__summary form-ext-label grid-c-1"
               htmlFor="check-dark"
-              style={{fontSize: fontSize, color: fontColor}}
+              style={{ fontSize: fontSize, color: fontColor }}
             >
               {hasCheckBox && (
                 <span>
@@ -40,7 +49,7 @@ const RepoCard = ({ repoData, key, editingProperties }) => {
                   />
                 </span>
               )}
-              {hasRepoNameTitle && (`Repo Name:`)} {name}
+              {hasRepoNameTitle && `Repo Name:`} {name}
             </summary>
             <p style={{ paddingLeft: "6em" }}>
               Repo language:

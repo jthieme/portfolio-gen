@@ -11,9 +11,8 @@ const largeDiv = styled.div`
 `;
 
 const DefaultHome = () => {
-
   const CLIENT_ID = window.ENV.CLIENT_ID;
-  
+
   const githubLogin = () => {
     window.location.assign(
       `https://github.com/login/oauth/authorize?client_id=` + CLIENT_ID
@@ -41,7 +40,10 @@ const DefaultHome = () => {
         </div>
       </div>
       {/* <div style={{ backgroundColor: "#1e1e1e" }} className="text-white"> */}
-      <div style={{ background: "linear-gradient( #1e1e1e 65%, #ff5a1f)" }} className="text-white">
+      <div
+        style={{ background: "linear-gradient( #1e1e1e 65%, #ff5a1f)" }}
+        className="text-white"
+      >
         <h2 style={{ textAlign: "center", paddingTop: "2%" }}>What We Do</h2>
         <div style={{ padding: "5%", paddingLeft: "6%", display: "flex" }}>
           <LoggedOutTile
@@ -54,11 +56,15 @@ const DefaultHome = () => {
           />
           <LoggedOutTile
             title={"Edit"}
-            content={"Edit every property you can think of to make your Portfolio yours!"}
+            content={
+              "Edit every property you can think of to make your Portfolio yours!"
+            }
           />
           <LoggedOutTile
             title={"Share"}
-            content={"When you’re done, Publish your portfolio for employers to see."}
+            content={
+              "When you’re done, Publish your portfolio for employers to see."
+            }
           />
         </div>
       </div>
