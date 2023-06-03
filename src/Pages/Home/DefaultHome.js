@@ -21,7 +21,6 @@ const DefaultHome = () => {
   };
 
   return (
-    // <largeDiv>
     <div>
       <div style={{ marginTop: "-1.3%", height: "442px" }}>
         <img src={globe} style={{ width: "268.5%", height: "inherit" }} />
@@ -64,7 +63,6 @@ const DefaultHome = () => {
         </div>
       </div>
     </div>
-    // </largeDiv>
   );
 };
 

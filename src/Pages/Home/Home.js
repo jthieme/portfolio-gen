@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
+import Folder from "./Folder";
+import Earth from "../../assets/earth-in-space.jpg"
 
 const Home = ({ userData }) => {
   
-  const handleClick = () => {
-    window.location.assign(`http://localhost:3000/${userData.login}`);
-  }
+  console.log(userData)
   
   return (
     <>
-      <div>Home Page</div>
-      <button onClick={handleClick}>Go to account</button>
+      <div style={{marginTop: "-1.3%", height: "500px"}}>
+        <img src={Earth} alt="earth from space"/> 
+        <div style={{marginTop: "-50%"}}>
+        <Folder userData={userData}/>
+        </div>
+      </div>
+
     </>
   );
 };
