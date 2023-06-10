@@ -46,6 +46,7 @@ const RepoCard = ({ repoData, key, editingProperties }) => {
                     className="form-ext-input form-ext-input--dark"
                     type="checkbox"
                     onChange={handleRepoSelection}
+                    style={{cursor: "pointer"}}
                   />
                 </span>
               )}

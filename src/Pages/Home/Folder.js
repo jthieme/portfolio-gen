@@ -50,6 +50,11 @@ const Cover = styled.div`
   transform: translateX(0);
   transform-origin: left center;
   backface-visibility: hidden;
+
+  ::before {
+    margin-left: 30%;
+    content: "Hover to Open";
+  }
 `;
 
 const Tab = styled.div`

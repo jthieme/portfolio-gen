@@ -47,6 +47,7 @@ const Sidebar = ({
   repoCardFontColor,
   repoCardFontSize,
   sectionComponents,
+  setSectionComponents,
   selectedColorType,
   titleFontSize,
   portfolioAttributes,
@@ -118,6 +119,11 @@ const Sidebar = ({
       {`${parseInt(option)}px`}
     </option>
   ));
+
+  const removeSection = (sectionToRemove) => {
+    const updatedSections = sectionComponents.filter((section) => section !== sectionToRemove);
+    setSectionComponents(updatedSections);
+  };
 
   const [colorSelect, setColorSelect] = useState(false);
   const [repoColorSelect, setRepoColorSelect] = useState(false);
@@ -360,7 +366,7 @@ const Sidebar = ({
         {showSectionOptions &&
           sectionComponents.length > 0 &&
           sectionComponents.map((section, index) => (
-            <SectionCard section={section} index={index} />
+            <SectionCard section={section} index={index} removeSection={removeSection}/>
           ))}
         {showSectionOptions && sectionComponents.length === 0 && (
           <p>No data in the Sections</p>
@@ -436,7 +442,8 @@ const InteractivePanel = ({
 
   const handleAddComponentSection = (component) => {
     if (sectionComponents.includes(component)) {
-      console.log(`${component} is already in the portfolio`);
+      window.alert(`${component} is already in the portfolio`);
+      // console.log(`${component} is already in the portfolio`);
     } else {
       setSectionComponents((prevSections) => [...prevSections, component]);
     }

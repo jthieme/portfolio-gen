@@ -5,11 +5,15 @@ import {
   faGripVertical,
 } from "@fortawesome/free-solid-svg-icons";
 
-const SectionCard = ({ section, index }) => {
+const SectionCard = ({ section, index, removeSection }) => {
   const sectionType =
     section.$$typeof
       ? section.type.name
       : section.name;
+
+  const handleRemoveSection = () => {
+    removeSection(section);
+  }
 
   return (
     <div key={index} style={{ padding: "1%", marginLeft: "28%", width: "50%" }}>
@@ -34,7 +38,7 @@ const SectionCard = ({ section, index }) => {
             textAlign: "right",
             cursor: "pointer",
           }}
-          // onClick={removeSection(section)}
+          onClick={handleRemoveSection}
         >
           <FontAwesomeIcon icon={faTrash} style={{ marginRight: "4%" }} />
         </span>
