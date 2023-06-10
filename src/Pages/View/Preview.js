@@ -1,12 +1,16 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import RepoCard from "../../Components/RepoList/RepoCard";
+import AboutMe from "../../Components/AboutMe";
+import WorkExperience from "../../Components/WorkExperience";
+import Summary from "../../Components/Summary";
+import ContactInfo from "../../Components/ContactInfo";
 
 const Preview = () => {
   const location = useLocation();
   const documentAttributes = location?.state;
 
-  const {fontOptions, backgroundOptions, repoCardOptions} = documentAttributes;
+  const {fontOptions, backgroundOptions, repoCardOptions, sectionOptions} = documentAttributes;
 
   console.log(documentAttributes);
 
@@ -15,20 +19,51 @@ const Preview = () => {
     hasCheckBox: false,
   };
 
-  const repoList = repoCardOptions?.repoList?.map((repo) => {
-    return (
-      <div
-        style={{ width: "80%", margin: "auto" }}
-        className="grid-cs-3 grid-ce-10"
-      >
-        <RepoCard
-          repoData={repo}
-          key={repo.id}
-          editingProperties={editingProperties}
-        />
-      </div>
-    );
+  // const repoList = repoCardOptions?.repoList?.map((repo) => {
+  //   return (
+  //     <div
+  //       style={{ width: "80%", margin: "auto" }}
+  //       className="grid-cs-3 grid-ce-10"
+  //     >
+  //       <RepoCard
+  //         repoData={repo}
+  //         key={repo.id}
+  //         editingProperties={editingProperties}
+  //       />
+  //     </div>
+  //   );
+  // });
+
+  const sections = sectionOptions?.sections?.map((section, key={key}) => {
+    if (section.$$typeof) {
+      if (section.type.name === "AboutMe") {
+        return <AboutMe />;
+      }
+      if (section.type.name === "ContactInfo") {
+        return <ContactInfo />;
+      }
+      if (section.type.name === "Summary") {
+        return <Summary />;
+      }
+      if (section.type.name === "WorkExperience") {
+        return <WorkExperience />;
+      }
+    } else {
+      return (
+        <div
+          style={{ width: "80%", margin: "auto" }}
+          className="grid-cs-3 grid-ce-10"
+        >
+          <RepoCard
+            repoData={section}
+            key={section.id}
+            editingProperties={editingProperties}
+          />
+        </div>
+      );
+    }
   });
+
 
   return (
     <section
@@ -82,7 +117,7 @@ const Preview = () => {
           </div>
         </div>
       </div>
-      <div style={{ marginTop: "5%" }}>{repoList}</div>
+      <div style={{ marginTop: "5%" }}>{sections}</div>
     </section>
   );
 };

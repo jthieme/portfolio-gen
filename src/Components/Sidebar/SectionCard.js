@@ -4,6 +4,7 @@ import {
   faTrash,
   faGripVertical,
 } from "@fortawesome/free-solid-svg-icons";
+import { useDrag } from "react-dnd";
 
 const SectionCard = ({ section, index, removeSection }) => {
   const sectionType =
@@ -13,7 +14,17 @@ const SectionCard = ({ section, index, removeSection }) => {
 
   const handleRemoveSection = () => {
     removeSection(section);
-  }
+  };
+
+  // const [{ isDragging }, drag] = useDrag(() => ({
+  //   type: "SECTION_CARD",
+  //   item: { index },
+  //   collect: (monitor) => ({
+  //     isDragging: monitor.isDragging(),
+  //   }),
+  // }));
+
+  // const opacity = isDragging ? 0.5 : 1;
 
   return (
     <div key={index} style={{ padding: "1%", marginLeft: "28%", width: "50%" }}>
@@ -28,7 +39,7 @@ const SectionCard = ({ section, index, removeSection }) => {
         <span>
           <FontAwesomeIcon
             icon={faGripVertical}
-            style={{ marginRight: "4%", cursor: "pointer" }}
+            style={{ marginRight: "4%", cursor: "move" }}
           />
         </span>
         {sectionType}

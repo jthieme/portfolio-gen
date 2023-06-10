@@ -21,6 +21,8 @@ import DropDownOptions from "../../Components/Sidebar/DropDownOptions";
 import FontInput from "../../Components/Sidebar/FontInput";
 import FontColorSelect from "../../Components/Sidebar/FontColorSelect";
 import SectionCard from "../../Components/Sidebar/SectionCard";
+import { DndContext } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 const Sidebar = ({
   changeFontColor,
@@ -327,42 +329,6 @@ const Sidebar = ({
         hLabel={"Section Options"}
       />
       <div id="blank">
-        {/* {showSectionOptions &&
-          sections.length > 0 &&
-          sections.map((section) => (
-            <div style={{ padding: "1%", marginLeft: "28%", width: "50%" }}>
-              <div
-                style={{
-                  backgroundColor: "#e1e1e1",
-                  marginTop: "1%",
-                  padding: "0.5%",
-                  paddingLeft: "6%",
-                }}
-              >
-                <span>
-                  <FontAwesomeIcon
-                    icon={faGripVertical}
-                    style={{ marginRight: "4%", cursor: "pointer" }}
-                  />
-                </span>
-                {section.type.name}
-                <span
-                  style={{
-                    marginLeft: "6%",
-                    textAlign: "right",
-                    cursor: "pointer",
-                  }}
-                  // onClick={removeSection(section)}
-                >
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    style={{ marginRight: "4%" }}
-                  />
-                </span>
-              </div>
-            </div>
-          ))} */}
-
         {showSectionOptions &&
           sectionComponents.length > 0 &&
           sectionComponents.map((section, index) => (
@@ -543,7 +509,7 @@ const InteractivePanel = ({
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add About Me"
                   onClick={() => {
-                    handleAddComponentSection(<AboutMe />);
+                    handleAddComponentSection({$$typeof: "component", type: {name: "AboutMe"}});
                   }}
                 >
                   <FontAwesomeIcon icon={faUser} />
@@ -551,21 +517,21 @@ const InteractivePanel = ({
                 <div
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Work Experience"
-                  onClick={() => handleAddComponentSection(<WorkExperience />)}
+                  onClick={() => handleAddComponentSection({$$typeof: "component", type: {name: "WorkExperience"}})}
                 >
                   <FontAwesomeIcon icon={faBriefcase} />
                 </div>
                 <div
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Summary"
-                  onClick={() => handleAddComponentSection(<Summary />)}
+                  onClick={() => handleAddComponentSection({$$typeof: "component", type: {name: "Summary"}})}
                 >
                   <FontAwesomeIcon icon={faClipboardList} />
                 </div>
                 <div
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Contact Info"
-                  onClick={() => handleAddComponentSection(<ContactInfo />)}
+                  onClick={() => handleAddComponentSection({$$typeof: "component", type: {name: "ContactInfo"}})}
                 >
                   <FontAwesomeIcon icon={faAddressCard} />
                 </div>
@@ -603,8 +569,6 @@ const InteractiveEditor = ({ userData }) => {
   const [repoMarginBottom, setRepoMarginBottom] = useState("0%");
   const [sectionComponents, setSectionComponents] = useState(selectedRepos);
 
-  var sections = [];
-
   // const removeSection = (component) => {
   //   let index = sections.indexOf(component);
   //   sections.splice(index, 1);
@@ -627,13 +591,16 @@ const InteractiveEditor = ({ userData }) => {
       color: "",
     },
     repoCardOptions: {
-      repoList: selectedRepos,
+      // repoList: selectedRepos,
       hasBorder: border,
       fontOptions: {
         size: "",
         color: "",
       },
     },
+    sectionOptions: {
+      sections: sectionComponents
+    }
   };
 
   const handleBorderSelection = () => {
@@ -730,7 +697,6 @@ const InteractiveEditor = ({ userData }) => {
         repoMarginBottom={repoMarginBottom}
         repoCardFontColor={repoCardFontColor}
         repoCardFontSize={repoCardFontSize}
-        // sections={sections}
         sectionComponents={sectionComponents}
         setSectionComponents={setSectionComponents}
         selectedRepos={selectedRepos}
@@ -740,6 +706,7 @@ const InteractiveEditor = ({ userData }) => {
         titleFontSize={titleFontSize}
         userData={userData}
       />
+      
       <Sidebar
         changeBackgroundColor={changeBackgroundColor}
         changeFontColor={changeFontColor}
@@ -757,10 +724,8 @@ const InteractiveEditor = ({ userData }) => {
         nameMarginTop={nameMarginTop}
         repoMarginLeft={repoMarginLeft}
         repoMarginBottom={repoMarginBottom}
-        // removeSection={removeSection}
         repoCardFontColor={repoCardFontColor}
         repoCardFontSize={repoCardFontSize}
-        // sections={sections}
         sectionComponents={sectionComponents}
         setSectionComponents={setSectionComponents}
         selectedColorType={selectedColorType}
