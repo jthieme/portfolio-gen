@@ -36,16 +36,16 @@ const Preview = () => {
 
   const sections = sectionOptions?.sections?.map((section, key={key}) => {
     if (section.$$typeof) {
-      if (section.type.name === "AboutMe") {
+      if (section.name === "AboutMe") {
         return <AboutMe />;
       }
-      if (section.type.name === "ContactInfo") {
+      if (section.name === "ContactInfo") {
         return <ContactInfo />;
       }
-      if (section.type.name === "Summary") {
+      if (section.name === "Summary") {
         return <Summary />;
       }
-      if (section.type.name === "WorkExperience") {
+      if (section.name === "WorkExperience") {
         return <WorkExperience />;
       }
     } else {

@@ -378,16 +378,16 @@ const InteractivePanel = ({
 
   const sections = sectionComponents.map((section) => {
     if (section.$$typeof) {
-      if (section.type.name === "AboutMe") {
+      if (section.name === "AboutMe") {
         return <AboutMe />;
       }
-      if (section.type.name === "ContactInfo") {
+      if (section.name === "ContactInfo") {
         return <ContactInfo />;
       }
-      if (section.type.name === "Summary") {
+      if (section.name === "Summary") {
         return <Summary />;
       }
-      if (section.type.name === "WorkExperience") {
+      if (section.name === "WorkExperience") {
         return <WorkExperience />;
       }
     } else {
@@ -509,7 +509,7 @@ const InteractivePanel = ({
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add About Me"
                   onClick={() => {
-                    handleAddComponentSection({$$typeof: "component", type: {name: "AboutMe"}});
+                    handleAddComponentSection({$$typeof: "component", name: "AboutMe"});
                   }}
                 >
                   <FontAwesomeIcon icon={faUser} />
@@ -517,21 +517,21 @@ const InteractivePanel = ({
                 <div
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Work Experience"
-                  onClick={() => handleAddComponentSection({$$typeof: "component", type: {name: "WorkExperience"}})}
+                  onClick={() => handleAddComponentSection({$$typeof: "component", name: "WorkExperience"})}
                 >
                   <FontAwesomeIcon icon={faBriefcase} />
                 </div>
                 <div
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Summary"
-                  onClick={() => handleAddComponentSection({$$typeof: "component", type: {name: "Summary"}})}
+                  onClick={() => handleAddComponentSection({$$typeof: "component", name: "Summary"})}
                 >
                   <FontAwesomeIcon icon={faClipboardList} />
                 </div>
                 <div
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Contact Info"
-                  onClick={() => handleAddComponentSection({$$typeof: "component", type: {name: "ContactInfo"}})}
+                  onClick={() => handleAddComponentSection({$$typeof: "component", name: "ContactInfo"})}
                 >
                   <FontAwesomeIcon icon={faAddressCard} />
                 </div>
