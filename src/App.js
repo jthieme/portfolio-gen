@@ -38,7 +38,6 @@ function App() {
       <NavBar userData={userData} />
       <Routes>
         {localStorage.getItem("accessToken") ? (
-          // <Route path="/account" element={<Account userData={userData}/>} />
           <Route path="/home" element={<Home userData={userData}/>} />
         ) : (
           <Route path="/" element={<DefaultHome />} />

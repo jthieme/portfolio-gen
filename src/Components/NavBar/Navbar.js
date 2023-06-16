@@ -3,9 +3,8 @@ import styled from "styled-components";
 
 const NavBar = ({ userData }) => {
   const [reRender, setReRender] = useState(false);
-  // const [accessToken, setAccessToken] = useState(false);
 
-  const SERVER_URL = window.ENV.REACT_APP_SERVER_URL; // this should be set in your .env file
+  const SERVER_URL = window.ENV.REACT_APP_SERVER_URL;
   const CLIENT_ID = window.ENV.CLIENT_ID;
 
   const StyledAvatar = styled.img`

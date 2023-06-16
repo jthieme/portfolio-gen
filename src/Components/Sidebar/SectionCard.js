@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrash,
   faGripVertical,
+  faPencil,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDrag } from "react-dnd";
 
-const SectionCard = ({ section, index, removeSection }) => {
+const SectionCard = ({ section, index, removeSection, edit, sectionEdit }) => {
   const sectionType = section.name;
+
+  
 
   const handleRemoveSection = () => {
     removeSection(section);
   };
+
+  const handleSectionEdit = () => {
+    sectionEdit(section);
+  }
+
 
   // const [{ isDragging }, drag] = useDrag(() => ({
   //   type: "SECTION_CARD",
@@ -40,6 +48,18 @@ const SectionCard = ({ section, index, removeSection }) => {
           />
         </span>
         {sectionType}
+        {edit == "true" && (
+          <span
+            style={{
+              marginLeft: "6%",
+              textAlign: "right",
+              cursor: "pointer",
+            }}
+            onClick={handleSectionEdit}
+          >
+            <FontAwesomeIcon icon={faPencil} style={{ marginRight: "4%" }} />
+          </span>
+        )}
         <span
           style={{
             marginLeft: "6%",

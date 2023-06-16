@@ -123,9 +123,13 @@ const Sidebar = ({
   ));
 
   const removeSection = (sectionToRemove) => {
-    const updatedSections = sectionComponents.filter((section) => section !== sectionToRemove);
+    const updatedSections = sectionComponents.filter(
+      (section) => section !== sectionToRemove
+    );
     setSectionComponents(updatedSections);
   };
+
+
 
   const [colorSelect, setColorSelect] = useState(false);
   const [repoColorSelect, setRepoColorSelect] = useState(false);
@@ -133,6 +137,12 @@ const Sidebar = ({
   const [showCardOptions, setShowCardOptions] = useState(false);
   const [showFontOptions, setShowFontOptions] = useState(false);
   const [showSectionOptions, setShowSectionOptions] = useState(false);
+  const [showEditSection, setShowEditSection] = useState(false);
+
+  const sectionEdit = (section) => {
+    console.log("edit section", section.name); 
+    setShowEditSection(!showEditSection);
+  };
 
   return (
     <section
@@ -332,7 +342,23 @@ const Sidebar = ({
         {showSectionOptions &&
           sectionComponents.length > 0 &&
           sectionComponents.map((section, index) => (
-            <SectionCard section={section} index={index} removeSection={removeSection}/>
+            (section.$$typeof ? (
+              <SectionCard
+              section={section}
+              index={index}
+              removeSection={removeSection}
+              edit={"true"}
+              sectionEdit={sectionEdit}
+            />
+            ) : (
+              <SectionCard
+              section={section}
+              index={index}
+              removeSection={removeSection}
+              edit={false}
+            />
+            ))
+            
           ))}
         {showSectionOptions && sectionComponents.length === 0 && (
           <p>No data in the Sections</p>
@@ -509,7 +535,10 @@ const InteractivePanel = ({
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add About Me"
                   onClick={() => {
-                    handleAddComponentSection({$$typeof: "component", name: "AboutMe"});
+                    handleAddComponentSection({
+                      $$typeof: "component",
+                      name: "AboutMe",
+                    });
                   }}
                 >
                   <FontAwesomeIcon icon={faUser} />
@@ -517,21 +546,36 @@ const InteractivePanel = ({
                 <div
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Work Experience"
-                  onClick={() => handleAddComponentSection({$$typeof: "component", name: "WorkExperience"})}
+                  onClick={() =>
+                    handleAddComponentSection({
+                      $$typeof: "component",
+                      name: "WorkExperience",
+                    })
+                  }
                 >
                   <FontAwesomeIcon icon={faBriefcase} />
                 </div>
                 <div
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Summary"
-                  onClick={() => handleAddComponentSection({$$typeof: "component", name: "Summary"})}
+                  onClick={() =>
+                    handleAddComponentSection({
+                      $$typeof: "component",
+                      name: "Summary",
+                    })
+                  }
                 >
                   <FontAwesomeIcon icon={faClipboardList} />
                 </div>
                 <div
                   className="bg-gray-200 u-shadow-xl px-2 py-1 m-1 u-round-xs tooltip"
                   data-tooltip="Add Contact Info"
-                  onClick={() => handleAddComponentSection({$$typeof: "component", name: "ContactInfo"})}
+                  onClick={() =>
+                    handleAddComponentSection({
+                      $$typeof: "component",
+                      name: "ContactInfo",
+                    })
+                  }
                 >
                   <FontAwesomeIcon icon={faAddressCard} />
                 </div>
@@ -599,8 +643,8 @@ const InteractiveEditor = ({ userData }) => {
       },
     },
     sectionOptions: {
-      sections: sectionComponents
-    }
+      sections: sectionComponents,
+    },
   };
 
   const handleBorderSelection = () => {
@@ -706,7 +750,7 @@ const InteractiveEditor = ({ userData }) => {
         titleFontSize={titleFontSize}
         userData={userData}
       />
-      
+
       <Sidebar
         changeBackgroundColor={changeBackgroundColor}
         changeFontColor={changeFontColor}
