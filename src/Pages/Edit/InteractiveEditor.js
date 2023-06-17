@@ -348,7 +348,7 @@ const Sidebar = ({
       <div id="blank">
         {showSectionOptions &&
           sectionComponents.length > 0 &&
-          sectionComponents.map((section, index) => {
+          (sectionComponents.map((section, index) => (
             section.$$typeof ? (
               <SectionCard
                 section={section}
@@ -364,9 +364,52 @@ const Sidebar = ({
                 removeSection={removeSection}
                 edit={false}
               />
-            );
-          })
-        }
+            ))
+          ))}
+
+          {/* {showSummarySection && sectionComponents.map((section) => {
+               {
+                showAboutSection && section.name == "AboutMe" && (
+                  <FontInput
+                    labelText={section.name}
+                    value={aboutMeContent}
+                    handleChange={handleSectionContentChange}
+                    placeholder={section.name}
+                  />
+                )
+              }
+              {
+                showSummarySection && section.name == "Summary" && (
+                  <FontInput
+                    labelText={section.name}
+                    value={summaryContent}
+                    handleChange={handleSectionContentChange}
+                    placeholder={section.name}
+                  />
+                )
+              }
+              {
+                showWorkSection && section.name == "WorkExperience" && (
+                  <FontInput
+                    labelText={section.name}
+                    value={workContent}
+                    handleChange={handleSectionContentChange}
+                    placeholder={section.name}
+                  />
+                )
+              }
+              {
+                showContactSection && section.name == "ContactInfo" && (
+                  <FontInput
+                    labelText={section.name}
+                    value={contactInfoContent}
+                    handleChange={handleSectionContentChange}
+                    placeholder={section.name}
+                  /> 
+                )
+              }
+           })} */}
+           
         {showSectionOptions && sectionComponents.length === 0 && (
           <p>No data in the Sections</p>
         )}
