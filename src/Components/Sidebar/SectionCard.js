@@ -10,8 +10,6 @@ import { useDrag } from "react-dnd";
 const SectionCard = ({ section, index, removeSection, edit, sectionEdit }) => {
   const sectionType = section.name;
 
-  
-
   const handleRemoveSection = () => {
     removeSection(section);
   };
@@ -19,7 +17,6 @@ const SectionCard = ({ section, index, removeSection, edit, sectionEdit }) => {
   const handleSectionEdit = () => {
     sectionEdit(section);
   }
-
 
   // const [{ isDragging }, drag] = useDrag(() => ({
   //   type: "SECTION_CARD",

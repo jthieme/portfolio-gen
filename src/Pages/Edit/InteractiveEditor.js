@@ -12,10 +12,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import RepoCard from "../../Components/RepoList/RepoCard";
-import AboutMe from "../../Components/AboutMe";
-import WorkExperience from "../../Components/WorkExperience";
-import Summary from "../../Components/Summary";
-import ContactInfo from "../../Components/ContactInfo";
+import SectionBlock from "../../Components/SectionBlock";
 import SpacingInput from "../../Components/Sidebar/SpacingInput";
 import DropDownOptions from "../../Components/Sidebar/DropDownOptions";
 import FontInput from "../../Components/Sidebar/FontInput";
@@ -25,8 +22,10 @@ import { DndContext } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 const Sidebar = ({
+  aboutMeContent,
   changeFontColor,
   changeBackgroundColor,
+  contactInfoContent,
   firstName,
   fontSize,
   handleBorderSelection,
@@ -38,6 +37,7 @@ const Sidebar = ({
   handleRepoCardFontColor,
   handleRepoCardFontSize,
   handleRepoMargin,
+  handleSectionContentChange,
   lastName,
   nameMarginLeft,
   nameMarginTop,
@@ -51,10 +51,12 @@ const Sidebar = ({
   sectionComponents,
   setSectionComponents,
   selectedColorType,
+  summaryContent,
   titleFontSize,
   portfolioAttributes,
   title,
   userData,
+  workContent,
 }) => {
   const options = [
     "10px",
@@ -129,19 +131,28 @@ const Sidebar = ({
     setSectionComponents(updatedSections);
   };
 
-
-
   const [colorSelect, setColorSelect] = useState(false);
   const [repoColorSelect, setRepoColorSelect] = useState(false);
   const [showBackgroundOptions, setShowBackgroundOptions] = useState(false);
   const [showCardOptions, setShowCardOptions] = useState(false);
   const [showFontOptions, setShowFontOptions] = useState(false);
   const [showSectionOptions, setShowSectionOptions] = useState(false);
-  const [showEditSection, setShowEditSection] = useState(false);
+  const [showContactSection, setShowContactSection] = useState(false);
+  const [showSummarySection, setShowSummarySection] = useState(false);
+  const [showWorkSection, setShowWorkSection] = useState(false);
+  const [showAboutSection, setShowAboutSection] = useState(false);
 
   const sectionEdit = (section) => {
-    console.log("edit section", section.name); 
-    setShowEditSection(!showEditSection);
+    console.log("edit section", section.name);
+    if (section.name == "AboutMe") {
+      setShowAboutSection(!showAboutSection);
+    } else if (section.name == "ContactInfo") {
+      setShowContactSection(!showContactSection);
+    } else if (section.name == "Summary") {
+      setShowSummarySection(!showSummarySection);
+    } else if (section.name == "WorkExperience") {
+      setShowWorkSection(!showWorkSection);
+    }
   };
 
   return (
@@ -326,10 +337,6 @@ const Sidebar = ({
               />
             </div>
           </div>
-
-          {/* <div>List View</div>
-          <div>Carousel View</div>
-          <div>Card View</div> */}
         </>
       )}
 
@@ -341,25 +348,25 @@ const Sidebar = ({
       <div id="blank">
         {showSectionOptions &&
           sectionComponents.length > 0 &&
-          sectionComponents.map((section, index) => (
-            (section.$$typeof ? (
+          sectionComponents.map((section, index) => {
+            section.$$typeof ? (
               <SectionCard
-              section={section}
-              index={index}
-              removeSection={removeSection}
-              edit={"true"}
-              sectionEdit={sectionEdit}
-            />
+                section={section}
+                index={index}
+                removeSection={removeSection}
+                edit={"true"}
+                sectionEdit={sectionEdit}
+              />
             ) : (
               <SectionCard
-              section={section}
-              index={index}
-              removeSection={removeSection}
-              edit={false}
-            />
-            ))
-            
-          ))}
+                section={section}
+                index={index}
+                removeSection={removeSection}
+                edit={false}
+              />
+            );
+          })
+        }
         {showSectionOptions && sectionComponents.length === 0 && (
           <p>No data in the Sections</p>
         )}
@@ -369,8 +376,10 @@ const Sidebar = ({
 };
 
 const InteractivePanel = ({
+  aboutMeContent,
   backgroundColor,
   border,
+  contactInfoContent,
   fontColor,
   fontSize,
   firstName,
@@ -386,9 +395,11 @@ const InteractivePanel = ({
   selectedRepos,
   selectedImage,
   setSelectedImage,
+  summaryContent,
   title,
   titleFontSize,
   userData,
+  workContent,
 }) => {
   const editingProperties = {
     hasCheckBox: false,
@@ -405,16 +416,16 @@ const InteractivePanel = ({
   const sections = sectionComponents.map((section) => {
     if (section.$$typeof) {
       if (section.name === "AboutMe") {
-        return <AboutMe />;
+        return <SectionBlock title="About Me" content={aboutMeContent} />;
       }
       if (section.name === "ContactInfo") {
-        return <ContactInfo />;
+        return <SectionBlock title="Contact Info" content={contactInfoContent} />;
       }
       if (section.name === "Summary") {
-        return <Summary />;
+        return <SectionBlock title="Summary" content={summaryContent} />;
       }
       if (section.name === "WorkExperience") {
-        return <WorkExperience />;
+        return <SectionBlock title="Work Experience" content={workContent} />;
       }
     } else {
       return (
@@ -593,6 +604,15 @@ const InteractiveEditor = ({ userData }) => {
   const location = useLocation();
   const selectedRepos = location?.state?.repos;
 
+  const defaultSectionContent =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod \
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim \
+  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \
+  commodo consequat. Duis aute irure dolor in reprehenderit in voluptate \
+  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint \
+  occaecat cupidatat non proident, sunt in culpa qui officia deserunt \
+  mollit anim id est laborum.";
+
   // const [textSize, setTextSize] = useState("16px");
   const [backgroundColor, setBackgroundColor] = useState("#fff");
   const [border, setBorder] = useState(false);
@@ -612,6 +632,12 @@ const InteractiveEditor = ({ userData }) => {
   const [repoMarginLeft, setRepoMarginLeft] = useState("2%");
   const [repoMarginBottom, setRepoMarginBottom] = useState("0%");
   const [sectionComponents, setSectionComponents] = useState(selectedRepos);
+  const [aboutMeContent, setAboutMeContent] = useState(defaultSectionContent);
+  const [summaryContent, setSummaryContent] = useState(defaultSectionContent);
+  const [contactInfoContent, setContactInfoContent] = useState(
+    defaultSectionContent
+  );
+  const [workContent, setWorkContent] = useState(defaultSectionContent);
 
   // const removeSection = (component) => {
   //   let index = sections.indexOf(component);
@@ -726,11 +752,26 @@ const InteractiveEditor = ({ userData }) => {
     setRepoCardFontColor("#000000");
   };
 
+  const handleSectionContentChange = (e) => {
+    const { name, value } = e.target;
+    if (name == "AboutMe") {
+      setAboutMeContent(value);
+    } else if (name == "Summary") {
+      setSummaryContent(value);
+    } else if (name == "WorkExperience") {
+      setWorkContent(value);
+    } else if (name == "ContactInfo") {
+      setContactInfoContent(value);
+    }
+  };
+
   return (
     <main className="grid u-gap-1">
       <InteractivePanel
+        aboutMeContent={aboutMeContent}
         backgroundColor={backgroundColor}
         border={border}
+        contactInfoContent={contactInfoContent}
         fontColor={fontColor}
         fontSize={fontSize}
         firstName={firstName}
@@ -746,14 +787,18 @@ const InteractiveEditor = ({ userData }) => {
         selectedRepos={selectedRepos}
         selectedImage={selectedImage}
         setSelectedImage={setSelectedImage}
+        summaryContent={summaryContent}
         title={title}
         titleFontSize={titleFontSize}
         userData={userData}
+        workContent={workContent}
       />
 
       <Sidebar
+        aboutMeContent={aboutMeContent}
         changeBackgroundColor={changeBackgroundColor}
         changeFontColor={changeFontColor}
+        contactInfoContent={contactInfoContent}
         fontSize={fontSize}
         handleBorderSelection={handleBorderSelection}
         handleColorChange={handleColorChange}
@@ -764,6 +809,7 @@ const InteractiveEditor = ({ userData }) => {
         handleRepoMargin={handleRepoMargin}
         handleRepoCardFontColor={handleRepoCardFontColor}
         handleRepoCardFontSize={handleRepoCardFontSize}
+        handleSectionContentChange={handleSectionContentChange}
         nameMarginLeft={nameMarginLeft}
         nameMarginTop={nameMarginTop}
         repoMarginLeft={repoMarginLeft}
@@ -773,11 +819,13 @@ const InteractiveEditor = ({ userData }) => {
         sectionComponents={sectionComponents}
         setSectionComponents={setSectionComponents}
         selectedColorType={selectedColorType}
+        summaryContent={summaryContent}
         titleFontSize={titleFontSize}
         resetFontColor={resetFontColor}
         resetRepoFontColor={resetRepoFontColor}
         portfolioAttributes={portfolioAttributes}
         userData={userData}
+        workContent={workContent}
       />
     </main>
   );

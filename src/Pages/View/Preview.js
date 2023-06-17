@@ -1,10 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import SectionBlock from "../../Components/SectionBlock";
 import RepoCard from "../../Components/RepoList/RepoCard";
-import AboutMe from "../../Components/AboutMe";
-import WorkExperience from "../../Components/WorkExperience";
-import Summary from "../../Components/Summary";
-import ContactInfo from "../../Components/ContactInfo";
 
 const Preview = () => {
   const location = useLocation();
@@ -37,16 +34,16 @@ const Preview = () => {
   const sections = sectionOptions?.sections?.map((section, key={key}) => {
     if (section.$$typeof) {
       if (section.name === "AboutMe") {
-        return <AboutMe />;
+        return <SectionBlock title="About Me" content="" />;
       }
       if (section.name === "ContactInfo") {
-        return <ContactInfo />;
+        return <SectionBlock title="Contact Info" content="" />;
       }
       if (section.name === "Summary") {
-        return <Summary />;
+        return <SectionBlock title="Summary" content="" />;
       }
       if (section.name === "WorkExperience") {
-        return <WorkExperience />;
+        return <SectionBlock title="Work Experience" content="" />;
       }
     } else {
       return (
