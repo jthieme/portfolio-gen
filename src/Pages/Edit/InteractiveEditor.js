@@ -107,7 +107,6 @@ const Sidebar = ({
     "100px",
   ];
 
-  console.log(sectionComponents);
   const navigate = useNavigate();
 
   function handlePreview() {
@@ -143,14 +142,13 @@ const Sidebar = ({
   const [showAboutSection, setShowAboutSection] = useState(false);
 
   const sectionEdit = (section) => {
-    console.log("edit section", section.name);
-    if (section.name == "AboutMe") {
+    if (section.name === "AboutMe") {
       setShowAboutSection(!showAboutSection);
-    } else if (section.name == "ContactInfo") {
+    } else if (section.name === "ContactInfo") {
       setShowContactSection(!showContactSection);
-    } else if (section.name == "Summary") {
+    } else if (section.name === "Summary") {
       setShowSummarySection(!showSummarySection);
-    } else if (section.name == "WorkExperience") {
+    } else if (section.name === "WorkExperience") {
       setShowWorkSection(!showWorkSection);
     }
   };
@@ -346,73 +344,76 @@ const Sidebar = ({
         hLabel={"Section Options"}
       />
       <div id="blank">
-        {showSectionOptions &&
-          sectionComponents.length > 0 &&
-          (sectionComponents.map((section, index) => (
-            section.$$typeof ? (
-              <SectionCard
-                section={section}
-                index={index}
-                removeSection={removeSection}
-                edit={"true"}
-                sectionEdit={sectionEdit}
-              />
-            ) : (
-              <SectionCard
-                section={section}
-                index={index}
-                removeSection={removeSection}
-                edit={false}
-              />
-            ))
-          ))}
+      {showSectionOptions && sectionComponents.size > 0 && (
+  <>
+    {Array.from(sectionComponents).map((section, index) =>
+      section.$$typeof ? (
+        <SectionCard
+          section={section}
+          index={index}
+          removeSection={removeSection}
+          edit="true"
+          sectionEdit={sectionEdit}
+        />
+      ) : (
+        <SectionCard
+          section={section}
+          index={index}
+          removeSection={removeSection}
+          edit={false}
+        />
+      )
+    )}
+  </>
+)}
 
-          {/* {showSummarySection && sectionComponents.map((section) => {
-               {
-                showAboutSection && section.name == "AboutMe" && (
-                  <FontInput
-                    labelText={section.name}
-                    value={aboutMeContent}
-                    handleChange={handleSectionContentChange}
-                    placeholder={section.name}
-                  />
-                )
-              }
-              {
-                showSummarySection && section.name == "Summary" && (
-                  <FontInput
-                    labelText={section.name}
-                    value={summaryContent}
-                    handleChange={handleSectionContentChange}
-                    placeholder={section.name}
-                  />
-                )
-              }
-              {
-                showWorkSection && section.name == "WorkExperience" && (
-                  <FontInput
-                    labelText={section.name}
-                    value={workContent}
-                    handleChange={handleSectionContentChange}
-                    placeholder={section.name}
-                  />
-                )
-              }
-              {
-                showContactSection && section.name == "ContactInfo" && (
-                  <FontInput
-                    labelText={section.name}
-                    value={contactInfoContent}
-                    handleChange={handleSectionContentChange}
-                    placeholder={section.name}
-                  /> 
-                )
-              }
-           })} */}
-           
+
         {showSectionOptions && sectionComponents.length === 0 && (
           <p>No data in the Sections</p>
         )}
+
+        {Array.from(sectionComponents).map((section) => {
+          return (
+            <>
+              {showAboutSection && section.name === "AboutMe" && (
+                <FontInput
+                  labelText={section.name}
+                  value={aboutMeContent}
+                  handleChange={handleSectionContentChange}
+                  placeholder={section.name}
+                  name={section.name}
+                />
+              )}
+              {showSummarySection && section.name === "Summary" && (
+                <FontInput
+                  labelText={section.name}
+                  value={summaryContent}
+                  handleChange={handleSectionContentChange}
+                  placeholder={section.name}
+                  name={section.name}
+                />
+              )}
+              {showWorkSection && section.name === "WorkExperience" && (
+                <FontInput
+                  labelText={section.name}
+                  value={workContent}
+                  handleChange={handleSectionContentChange}
+                  placeholder={section.name}
+                  name={section.name}
+                />
+              )}
+              {showContactSection && section.name === "ContactInfo" && (
+                <FontInput
+                  labelText={section.name}
+                  value={contactInfoContent}
+                  handleChange={handleSectionContentChange}
+                  placeholder={section.name}
+                  name={section.name}
+                />
+              )}
+            </>
+          );
+        })}
       </div>
     </section>
   );
@@ -443,6 +444,7 @@ const InteractivePanel = ({
   titleFontSize,
   userData,
   workContent,
+  sectionSet,
 }) => {
   const editingProperties = {
     hasCheckBox: false,
@@ -456,44 +458,68 @@ const InteractivePanel = ({
 
   const [populateOptions, setPopulateOptions] = useState(false);
 
-  const sections = sectionComponents.map((section) => {
-    if (section.$$typeof) {
-      if (section.name === "AboutMe") {
-        return <SectionBlock title="About Me" content={aboutMeContent} />;
+  let temp = [];
+  let sectionValues = sectionComponents.values();
+  console.log("sectionValues", sectionValues);
+
+  const setSections = () => {
+    for (let section of sectionValues) {
+      if (section.$$typeof) {
+        if (section.name === "AboutMe") {
+          temp.push(<SectionBlock title="About Me" content={aboutMeContent} />);
+        }
+        if (section.name === "ContactInfo") {
+          temp.push(
+            <SectionBlock title="Contact Info" content={contactInfoContent} />
+          );
+        }
+        if (section.name === "Summary") {
+          temp.push(<SectionBlock title="Summary" content={summaryContent} />);
+        }
+        if (section.name === "WorkExperience") {
+          temp.push(
+            <SectionBlock title="Work Experience" content={workContent} />
+          );
+        }
+      } else {
+        temp.push(
+          <div
+            style={{ width: "80%", margin: "auto" }}
+            className="grid-cs-3 grid-ce-10"
+          >
+            <RepoCard
+              repoData={section}
+              key={section.id}
+              editingProperties={editingProperties}
+            />
+          </div>
+        );
       }
-      if (section.name === "ContactInfo") {
-        return <SectionBlock title="Contact Info" content={contactInfoContent} />;
-      }
-      if (section.name === "Summary") {
-        return <SectionBlock title="Summary" content={summaryContent} />;
-      }
-      if (section.name === "WorkExperience") {
-        return <SectionBlock title="Work Experience" content={workContent} />;
-      }
-    } else {
-      return (
-        <div
-          style={{ width: "80%", margin: "auto" }}
-          className="grid-cs-3 grid-ce-10"
-        >
-          <RepoCard
-            repoData={section}
-            key={section.id}
-            editingProperties={editingProperties}
-          />
-        </div>
-      );
     }
-  });
+    return temp;
+  };
 
   const handleAddComponentSection = (component) => {
-    if (sectionComponents.includes(component)) {
-      window.alert(`${component} is already in the portfolio`);
-      // console.log(`${component} is already in the portfolio`);
-    } else {
-      setSectionComponents((prevSections) => [...prevSections, component]);
-    }
+    setSectionComponents((prevSections) => {
+      const sectionArray = Array.from(prevSections);
+      const hasDuplicate = sectionArray.some((existingComponent) =>
+        compareComponents(existingComponent, component)
+      );
+      if (!hasDuplicate) {
+        sectionArray.push(component);
+      } else {
+        window.alert(`${component.name} has already been added to your portfolio.`);
+      }
+      return new Set(sectionArray);
+    });
   };
+  
+  // Function to compare components based on their properties
+  const compareComponents = (componentA, componentB) => {
+    // Compare properties here and return true if they are the same, otherwise false
+    return componentA.name === componentB.name;
+  };
+  
 
   return (
     <section
@@ -501,7 +527,6 @@ const InteractivePanel = ({
       style={{
         border: "1px solid black",
         backgroundColor: backgroundColor,
-        // color: fontColor,
         height: "650px",
         marginLeft: "1%",
         overflow: "auto",
@@ -638,7 +663,8 @@ const InteractivePanel = ({
           </div>
         )}
       </div>
-      <div style={{ marginTop: "5%" }}>{sections}</div>
+      <div style={{ marginTop: "5%" }}>{setSections()}</div>
+      {console.log(temp)}
     </section>
   );
 };
@@ -647,14 +673,9 @@ const InteractiveEditor = ({ userData }) => {
   const location = useLocation();
   const selectedRepos = location?.state?.repos;
 
-  const defaultSectionContent =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod \
-  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim \
-  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \
-  commodo consequat. Duis aute irure dolor in reprehenderit in voluptate \
-  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint \
-  occaecat cupidatat non proident, sunt in culpa qui officia deserunt \
-  mollit anim id est laborum.";
+  const list = new Set(location?.state?.repos);
+
+  const defaultSectionContent = "Section Content";
 
   // const [textSize, setTextSize] = useState("16px");
   const [backgroundColor, setBackgroundColor] = useState("#fff");
@@ -674,13 +695,14 @@ const InteractiveEditor = ({ userData }) => {
   const [nameMarginTop, setNameMarginTop] = useState("-25%");
   const [repoMarginLeft, setRepoMarginLeft] = useState("2%");
   const [repoMarginBottom, setRepoMarginBottom] = useState("0%");
-  const [sectionComponents, setSectionComponents] = useState(selectedRepos);
+  const [sectionComponents, setSectionComponents] = useState(list);
   const [aboutMeContent, setAboutMeContent] = useState(defaultSectionContent);
   const [summaryContent, setSummaryContent] = useState(defaultSectionContent);
   const [contactInfoContent, setContactInfoContent] = useState(
     defaultSectionContent
   );
   const [workContent, setWorkContent] = useState(defaultSectionContent);
+  const [sectionSet, setSectionSet] = useState(list);
 
   // const removeSection = (component) => {
   //   let index = sections.indexOf(component);
@@ -797,13 +819,13 @@ const InteractiveEditor = ({ userData }) => {
 
   const handleSectionContentChange = (e) => {
     const { name, value } = e.target;
-    if (name == "AboutMe") {
+    if (name === "AboutMe") {
       setAboutMeContent(value);
-    } else if (name == "Summary") {
+    } else if (name === "Summary") {
       setSummaryContent(value);
-    } else if (name == "WorkExperience") {
+    } else if (name === "WorkExperience") {
       setWorkContent(value);
-    } else if (name == "ContactInfo") {
+    } else if (name === "ContactInfo") {
       setContactInfoContent(value);
     }
   };
@@ -835,6 +857,7 @@ const InteractiveEditor = ({ userData }) => {
         titleFontSize={titleFontSize}
         userData={userData}
         workContent={workContent}
+        sectionSet={sectionSet}
       />
 
       <Sidebar
