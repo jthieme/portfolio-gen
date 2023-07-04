@@ -7,7 +7,8 @@ const Preview = () => {
   const location = useLocation();
   const documentAttributes = location?.state;
 
-  const {fontOptions, backgroundOptions, repoCardOptions, sectionOptions} = documentAttributes;
+  const { fontOptions, backgroundOptions, repoCardOptions, sectionOptions } =
+    documentAttributes;
 
   console.log(documentAttributes);
 
@@ -16,51 +17,59 @@ const Preview = () => {
     hasCheckBox: false,
   };
 
-  // const repoList = repoCardOptions?.repoList?.map((repo) => {
-  //   return (
-  //     <div
-  //       style={{ width: "80%", margin: "auto" }}
-  //       className="grid-cs-3 grid-ce-10"
-  //     >
-  //       <RepoCard
-  //         repoData={repo}
-  //         key={repo.id}
-  //         editingProperties={editingProperties}
-  //       />
-  //     </div>
-  //   );
-  // });
+  console.log(sectionOptions.section);
 
-  const sections = sectionOptions?.sections?.map((section, key={key}) => {
+  const sections = [];
+  sectionOptions?.sections?.components?.forEach((section, key) => {
     if (section.$$typeof) {
       if (section.name === "AboutMe") {
-        return <SectionBlock title="About Me" content="" />;
+        sections.push(
+          <SectionBlock
+            key={key}
+            title="About Me"
+            content={sectionOptions.sections?.aboutMe}
+          />
+        );
       }
       if (section.name === "ContactInfo") {
-        return <SectionBlock title="Contact Info" content="" />;
+        sections.push(
+          <SectionBlock
+            key={key}
+            title="Contact Info"
+            content={sectionOptions.sections?.contactInfo}
+          />
+        );
       }
       if (section.name === "Summary") {
-        return <SectionBlock title="Summary" content="" />;
+        sections.push(
+          <SectionBlock
+            key={key}
+            title="Summary"
+            content={sectionOptions.sections?.summary}
+          />
+        );
       }
       if (section.name === "WorkExperience") {
-        return <SectionBlock title="Work Experience" content="" />;
+        sections.push(
+          <SectionBlock
+            key={key}
+            title="Work Experience"
+            content={sectionOptions.sections?.work}
+          />
+        );
       }
     } else {
-      return (
+      sections.push(
         <div
+          key={key}
           style={{ width: "80%", margin: "auto" }}
           className="grid-cs-3 grid-ce-10"
         >
-          <RepoCard
-            repoData={section}
-            key={section.id}
-            editingProperties={editingProperties}
-          />
+          <RepoCard repoData={section} editingProperties={editingProperties} />
         </div>
       );
     }
   });
-
 
   return (
     <section
@@ -72,9 +81,14 @@ const Preview = () => {
         overflow: "auto",
       }}
     >
-      
-      <button className="bg-orange-500 btn--lg hover-grow"
-      style={{marginLeft: "85%"}}>Publish</button>
+      {!documentAttributes.isPublished && (
+        <button
+          className="bg-orange-500 btn--lg hover-grow"
+          style={{ marginLeft: "85%" }}
+        >
+          Publish
+        </button>
+      )}
       <div className="grid u-gap-1">
         <div className="grid-cs-2 grid-ce-10 grid-rs-1 grid-re-2">
           <div className="grid-c-8">
@@ -90,13 +104,13 @@ const Preview = () => {
               className="grid-cols-1"
               src={documentAttributes.avatarImg}
             />
-  {console.log(fontOptions.marginLeft)}
+            {console.log(fontOptions.marginLeft)}
             <h2
               style={{
                 marginTop: "-14%",
                 marginLeft: fontOptions.marginLeft,
                 fontSize: fontOptions.size,
-                color: fontOptions.color
+                color: fontOptions.color,
               }}
             >
               {fontOptions.firstName} {fontOptions.lastName}
@@ -106,7 +120,7 @@ const Preview = () => {
                 marginTop: "-2%",
                 marginLeft: "32%",
                 fontSize: fontOptions.titleSize,
-                color: fontOptions.color
+                color: fontOptions.color,
               }}
             >
               {fontOptions.title}

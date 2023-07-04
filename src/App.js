@@ -17,11 +17,13 @@ function App() {
     getUserData();
   }, []);
 
+  const accessToken = localStorage.getItem("accessToken");
+
   async function getUserData() {
     await fetch(`${SERVER_URL}/getUserData`, {
       method: "GET",
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        Authorization: "Bearer " + accessToken,
       },
     })
       .then((response) => {
@@ -33,22 +35,22 @@ function App() {
       });
   }
 
+
   return (
     <Router>
       <NavBar userData={userData} />
       <Routes>
-        {localStorage.getItem("accessToken") ? (
+        { accessToken != null ? (
           <Route path="/home" element={<Home userData={userData}/>} />
         ) : (
           <Route path="/" element={<DefaultHome />} />
         )}
         <Route path={`/${userData.login}`} element={<Account userData={userData}/>} />
         <Route path={`/${userData.login}/edit`} element={<InteractiveEditor userData={userData}/>} />
-        <Route path={`/${userData.login}/preview`} element={<Preview userData={userData}/>} />
+        <Route path={`/${userData.login}/preview`} element={<Preview />} />
+        <Route path={`/${userData.login}/publish`} element={<Preview />} />
       </Routes>
     </Router>
-
-    // <NavBar />
   );
 }
 

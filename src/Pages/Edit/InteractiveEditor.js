@@ -38,6 +38,7 @@ const Sidebar = ({
   handleRepoCardFontSize,
   handleRepoMargin,
   handleSectionContentChange,
+  isPublished,
   lastName,
   nameMarginLeft,
   nameMarginTop,
@@ -49,6 +50,7 @@ const Sidebar = ({
   repoCardFontColor,
   repoCardFontSize,
   sectionComponents,
+  setIsPublished,
   setSectionComponents,
   selectedColorType,
   summaryContent,
@@ -113,6 +115,10 @@ const Sidebar = ({
     navigate(`/${userData.login}/preview`, { state: portfolioAttributes });
   }
 
+  function handlePublish() {
+    navigate(`/${userData.login}/publish`, { state: {...portfolioAttributes, isPublished: true} });
+  }
+
   const optionElements = options.map((option, index) => (
     <option
       key={index}
@@ -172,7 +178,7 @@ const Sidebar = ({
         <button className="btn-dark hover-grow" onClick={handlePreview}>
           Preview
         </button>
-        <button className="bg-orange-500 btn--lg hover-grow">Publish</button>
+        <button className="bg-orange-500 btn--lg hover-grow" onClick={handlePublish}>Publish</button>
       </div>
       <div className="divider" style={{ marginTop: "-2%" }} />
 
@@ -443,8 +449,7 @@ const InteractivePanel = ({
   title,
   titleFontSize,
   userData,
-  workContent,
-  sectionSet,
+  workContent
 }) => {
   const editingProperties = {
     hasCheckBox: false,
@@ -702,16 +707,13 @@ const InteractiveEditor = ({ userData }) => {
     defaultSectionContent
   );
   const [workContent, setWorkContent] = useState(defaultSectionContent);
-  const [sectionSet, setSectionSet] = useState(list);
+  const [isPublished, setIsPublished] = useState(false);
 
-  // const removeSection = (component) => {
-  //   let index = sections.indexOf(component);
-  //   sections.splice(index, 1);
-  // };
 
   const portfolioAttributes = {
     avatarImg: userData.avatar_url,
     chosenImg: selectedImage,
+    isPublished: isPublished,
     fontOptions: {
       firstName: firstName,
       lastName: lastName,
@@ -726,7 +728,6 @@ const InteractiveEditor = ({ userData }) => {
       color: "",
     },
     repoCardOptions: {
-      // repoList: selectedRepos,
       hasBorder: border,
       fontOptions: {
         size: "",
@@ -734,7 +735,13 @@ const InteractiveEditor = ({ userData }) => {
       },
     },
     sectionOptions: {
-      sections: sectionComponents,
+      sections: {
+        components: sectionComponents,
+        aboutMe: aboutMeContent,
+        contactInfo: contactInfoContent,
+        summary: summaryContent,
+        work: workContent
+      }
     },
   };
 
@@ -857,7 +864,6 @@ const InteractiveEditor = ({ userData }) => {
         titleFontSize={titleFontSize}
         userData={userData}
         workContent={workContent}
-        sectionSet={sectionSet}
       />
 
       <Sidebar
@@ -876,6 +882,7 @@ const InteractiveEditor = ({ userData }) => {
         handleRepoCardFontColor={handleRepoCardFontColor}
         handleRepoCardFontSize={handleRepoCardFontSize}
         handleSectionContentChange={handleSectionContentChange}
+        isPublished={isPublished}
         nameMarginLeft={nameMarginLeft}
         nameMarginTop={nameMarginTop}
         repoMarginLeft={repoMarginLeft}
@@ -883,6 +890,7 @@ const InteractiveEditor = ({ userData }) => {
         repoCardFontColor={repoCardFontColor}
         repoCardFontSize={repoCardFontSize}
         sectionComponents={sectionComponents}
+        setIsPublished={setIsPublished}
         setSectionComponents={setSectionComponents}
         selectedColorType={selectedColorType}
         summaryContent={summaryContent}
