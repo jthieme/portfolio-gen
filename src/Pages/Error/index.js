@@ -7,7 +7,7 @@ const ErrorWrapper = styled.div`
     margin: auto;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 80vh;
 `;
 
 const ErrorPage = () => {
