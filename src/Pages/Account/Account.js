@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import RepoList from "../../Components/RepoList/RepoList";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 
 const StyledDiv = styled.div`
   border: 1px solid black;
@@ -12,6 +12,26 @@ const StyledDiv = styled.div`
 `;
 
 const Account = ({ userData }) => {
+
+  const { username } = useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+      const fetchedData = userData.login;
+      setData(fetchedData);
+  }, []);
+
+  useEffect(() => {
+    const fun = () => {
+      console.log("login", userData.login);
+      if (username !== data) {
+        // navigate("/404");
+        console.log("username", username)
+      }
+    }
+    fun();
+  }, [data]);
+
 
   const [selectedRepos, setSelectedRepos] = useState([]);
 
@@ -38,19 +58,22 @@ const Account = ({ userData }) => {
   
   return (
     <>
+    {data && (
+
       <div className="grid grid-cols-12 u-gap-1">
         <RepoList
           userData={userData}
           handleCheckboxChange={handleCheckboxChange}
-        />
+          />
         <StyledDiv
           id="submit-btn"
           className="grid-cs-6 grid-ce-7 btn bg-orange-500 animated hide-text "
           onClick={handleClick}
-        >
+          >
           Submit
         </StyledDiv>
       </div>
+    )}
     </>
   );
 };

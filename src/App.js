@@ -7,6 +7,8 @@ import Account from "./Pages/Account/Account";
 import DefaultHome from "./Pages/Home/DefaultHome";
 import InteractiveEditor from "./Pages/Edit/InteractiveEditor";
 import Preview from "./Pages/View/Preview";
+import ErrorPage from "./Pages/Error";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
 
@@ -35,7 +37,6 @@ function App() {
       });
   }
 
-
   return (
     <Router>
       <NavBar userData={userData} />
@@ -45,14 +46,16 @@ function App() {
         ) : (
           <Route path="/" element={<DefaultHome />} />
         )}
-        <Route path={`/${userData.login}`} element={<Account userData={userData}/>} />
+        <Route path={`/:username`} element={<Account userData={userData} />} />
         <Route path={`/${userData.login}/edit`} element={<InteractiveEditor userData={userData}/>} />
         <Route path={`/${userData.login}/preview`} element={<Preview />} />
         <Route path={`/${userData.login}/publish`} element={<Preview />} />
+        <Route path="/404" element={<ErrorPage />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
+
 

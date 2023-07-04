@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import SectionBlock from "../../Components/SectionBlock";
 import RepoCard from "../../Components/RepoList/RepoCard";
 
 const Preview = () => {
+
+  useEffect(() => {
+    
+  }, []);
+
   const location = useLocation();
   const documentAttributes = location?.state;
 
