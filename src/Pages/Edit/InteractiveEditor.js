@@ -116,7 +116,9 @@ const Sidebar = ({
   }
 
   function handlePublish() {
-    navigate(`/${userData.login}/publish`, { state: {...portfolioAttributes, isPublished: true} });
+    navigate(`/${userData.login}/publish`, {
+      state: { ...portfolioAttributes, isPublished: true },
+    });
   }
 
   const optionElements = options.map((option, index) => (
@@ -130,10 +132,12 @@ const Sidebar = ({
   ));
 
   const removeSection = (sectionToRemove) => {
-    const updatedSections = sectionComponents.filter(
-      (section) => section !== sectionToRemove
-    );
-    setSectionComponents(updatedSections);
+    setSectionComponents((prevSections) => {
+      const sectionArray = Array.from(prevSections).filter(
+        (section) => section !== sectionToRemove
+      );
+      return new Set(sectionArray);
+    });
   };
 
   const [colorSelect, setColorSelect] = useState(false);
@@ -178,7 +182,12 @@ const Sidebar = ({
         <button className="btn-dark hover-grow" onClick={handlePreview}>
           Preview
         </button>
-        <button className="bg-orange-500 btn--lg hover-grow" onClick={handlePublish}>Publish</button>
+        <button
+          className="bg-orange-500 btn--lg hover-grow"
+          onClick={handlePublish}
+        >
+          Publish
+        </button>
       </div>
       <div className="divider" style={{ marginTop: "-2%" }} />
 
@@ -309,21 +318,6 @@ const Sidebar = ({
           />
 
           <div style={{ marginLeft: "1.2%" }}>
-            <label style={{ marginRight: "-1px" }}>Card Padding</label>
-            <SpacingInput
-              labelText={"X"}
-              name="nameMarginLeft"
-              nameMargin={nameMarginLeft}
-              handleMargin={handleNameMargin}
-            />
-
-            <SpacingInput
-              labelText={"Y"}
-              name="nameMarginTop"
-              nameMargin={nameMarginTop}
-              handleMargin={handleNameMargin}
-            />
-
             <div
               style={{
                 marginLeft: "1.2%",
@@ -349,30 +343,29 @@ const Sidebar = ({
         showOption={showSectionOptions}
         hLabel={"Section Options"}
       />
-      <div id="blank">
-      {showSectionOptions && sectionComponents.size > 0 && (
-  <>
-    {Array.from(sectionComponents).map((section, index) =>
-      section.$$typeof ? (
-        <SectionCard
-          section={section}
-          index={index}
-          removeSection={removeSection}
-          edit="true"
-          sectionEdit={sectionEdit}
-        />
-      ) : (
-        <SectionCard
-          section={section}
-          index={index}
-          removeSection={removeSection}
-          edit={false}
-        />
-      )
-    )}
-  </>
-)}
-
+      <div id="blank" style={{paddingBottom: "5%"}}>
+        {showSectionOptions && sectionComponents.size > 0 && (
+          <>
+            {Array.from(sectionComponents).map((section, index) =>
+              section.$$typeof ? (
+                <SectionCard
+                  section={section}
+                  index={index}
+                  removeSection={removeSection}
+                  edit={true}
+                  sectionEdit={sectionEdit}
+                />
+              ) : (
+                <SectionCard
+                  section={section}
+                  index={index}
+                  removeSection={removeSection}
+                  edit={false}
+                />
+              )
+            )}
+          </>
+        )}
 
         {showSectionOptions && sectionComponents.length === 0 && (
           <p>No data in the Sections</p>
@@ -449,7 +442,7 @@ const InteractivePanel = ({
   title,
   titleFontSize,
   userData,
-  workContent
+  workContent,
 }) => {
   const editingProperties = {
     hasCheckBox: false,
@@ -463,7 +456,7 @@ const InteractivePanel = ({
 
   const [populateOptions, setPopulateOptions] = useState(false);
 
-  let temp = [];
+  let sections = [];
   let sectionValues = sectionComponents.values();
   console.log("sectionValues", sectionValues);
 
@@ -471,23 +464,23 @@ const InteractivePanel = ({
     for (let section of sectionValues) {
       if (section.$$typeof) {
         if (section.name === "AboutMe") {
-          temp.push(<SectionBlock title="About Me" content={aboutMeContent} />);
+          sections.push(<SectionBlock title="About Me" content={aboutMeContent} />);
         }
         if (section.name === "ContactInfo") {
-          temp.push(
+          sections.push(
             <SectionBlock title="Contact Info" content={contactInfoContent} />
           );
         }
         if (section.name === "Summary") {
-          temp.push(<SectionBlock title="Summary" content={summaryContent} />);
+          sections.push(<SectionBlock title="Summary" content={summaryContent} />);
         }
         if (section.name === "WorkExperience") {
-          temp.push(
+          sections.push(
             <SectionBlock title="Work Experience" content={workContent} />
           );
         }
       } else {
-        temp.push(
+        sections.push(
           <div
             style={{ width: "80%", margin: "auto" }}
             className="grid-cs-3 grid-ce-10"
@@ -501,7 +494,7 @@ const InteractivePanel = ({
         );
       }
     }
-    return temp;
+    return sections;
   };
 
   const handleAddComponentSection = (component) => {
@@ -513,18 +506,19 @@ const InteractivePanel = ({
       if (!hasDuplicate) {
         sectionArray.push(component);
       } else {
-        window.alert(`${component.name} has already been added to your portfolio.`);
+        window.alert(
+          `${component.name} has already been added to your portfolio.`
+        );
       }
       return new Set(sectionArray);
     });
   };
-  
+
   // Function to compare components based on their properties
   const compareComponents = (componentA, componentB) => {
     // Compare properties here and return true if they are the same, otherwise false
     return componentA.name === componentB.name;
   };
-  
 
   return (
     <section
@@ -669,7 +663,6 @@ const InteractivePanel = ({
         )}
       </div>
       <div style={{ marginTop: "5%" }}>{setSections()}</div>
-      {console.log(temp)}
     </section>
   );
 };
@@ -709,7 +702,6 @@ const InteractiveEditor = ({ userData }) => {
   const [workContent, setWorkContent] = useState(defaultSectionContent);
   const [isPublished, setIsPublished] = useState(false);
 
-
   const portfolioAttributes = {
     avatarImg: userData.avatar_url,
     chosenImg: selectedImage,
@@ -730,9 +722,13 @@ const InteractiveEditor = ({ userData }) => {
     repoCardOptions: {
       hasBorder: border,
       fontOptions: {
-        size: "",
-        color: "",
+        size: repoCardFontSize,
+        color: repoCardFontColor,
       },
+      spacingOptions: {
+        marginLeft: repoMarginLeft,
+        marginBottom: repoMarginBottom
+      }
     },
     sectionOptions: {
       sections: {
@@ -740,8 +736,8 @@ const InteractiveEditor = ({ userData }) => {
         aboutMe: aboutMeContent,
         contactInfo: contactInfoContent,
         summary: summaryContent,
-        work: workContent
-      }
+        work: workContent,
+      },
     },
   };
 

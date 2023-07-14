@@ -5,7 +5,7 @@ import {
   faGripVertical,
   faPencil,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDrag } from "react-dnd";
+// import { useDrag } from "react-dnd";
 
 const SectionCard = ({ section, index, removeSection, edit, sectionEdit }) => {
   const sectionType = section.name;
@@ -16,7 +16,7 @@ const SectionCard = ({ section, index, removeSection, edit, sectionEdit }) => {
 
   const handleSectionEdit = () => {
     sectionEdit(section);
-  }
+  };
 
   // const [{ isDragging }, drag] = useDrag(() => ({
   //   type: "SECTION_CARD",
@@ -29,13 +29,19 @@ const SectionCard = ({ section, index, removeSection, edit, sectionEdit }) => {
   // const opacity = isDragging ? 0.5 : 1;
 
   return (
-    <div key={index} style={{ padding: "1%", marginLeft: "28%", width: "50%" }}>
+    <div
+      key={index}
+      style={{ padding: "1%", marginLeft: "22%", width: "60%" }}
+    >
       <div
         style={{
           backgroundColor: "#e1e1e1",
           marginTop: "1%",
           padding: "0.5%",
           paddingLeft: "6%",
+          display: "flex",
+          justifyContent: "space-between",
+          textAlign: "left"
         }}
       >
         <span>
@@ -45,10 +51,11 @@ const SectionCard = ({ section, index, removeSection, edit, sectionEdit }) => {
           />
         </span>
         {sectionType}
-        {edit == "true" && (
+
+        {edit && (
           <span
             style={{
-              marginLeft: "6%",
+              marginLeft: "35%",
               textAlign: "right",
               cursor: "pointer",
             }}
@@ -59,7 +66,7 @@ const SectionCard = ({ section, index, removeSection, edit, sectionEdit }) => {
         )}
         <span
           style={{
-            marginLeft: "6%",
+            marginRight: "6%",
             textAlign: "right",
             cursor: "pointer",
           }}

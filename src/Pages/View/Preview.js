@@ -5,9 +5,9 @@ import RepoCard from "../../Components/RepoList/RepoCard";
 
 const Preview = () => {
 
-  useEffect(() => {
+  // useEffect(() => {
     
-  }, []);
+  // }, []);
 
   const location = useLocation();
   const documentAttributes = location?.state;
@@ -18,8 +18,13 @@ const Preview = () => {
   console.log(documentAttributes);
 
   const editingProperties = {
-    hasBorder: repoCardOptions.hasBorder,
     hasCheckBox: false,
+    hasBorder: repoCardOptions.hasBorder,
+    hasRepoNameTitle: false,
+    fontSize: repoCardOptions.fontOptions.size,
+    fontColor: repoCardOptions.fontOptions.color,
+    marginLeft: repoCardOptions.spacingOptions.marginLeft,
+    marginBottom: repoCardOptions.spacingOptions.marginBottom,
   };
 
   console.log(sectionOptions.section);

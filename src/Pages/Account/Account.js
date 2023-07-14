@@ -139,7 +139,8 @@ const Account = ({ userData }) => {
       }, 1000);
     }
   };
-
+console.log("username from url", username);
+console.log("username from github", data);
   return (
     <>
       {loading && (
